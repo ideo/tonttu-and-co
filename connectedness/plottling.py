@@ -46,7 +46,6 @@ def grid_view():
     fig, ax = plt.subplots()
     ax.imshow(pairwise_df)
 
-    ax.set_xticks()
     ax.set_xticklabels(pairwise_df.index.tolist())
     ax.set_yticklabels(pairwise_df.index.tolist())
 
