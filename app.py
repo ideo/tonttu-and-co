@@ -2,7 +2,7 @@ import streamlit as st
 from streamlit_observable import observable
 # import matplotlib.pyplot as plt
 
-from connectedness import load_data, grouped_bar_chart
+from connectedness import load_data, grouped_bar_chart, grid_view
 
 
 st.title("Tonttu & Co. is here to help!")
@@ -33,4 +33,8 @@ force_graph = observers.get("data")
 st.subheader("Perceived Differences")
 st.write("Compare how you perceive others versus how others perceive you.")
 fig, ax = grouped_bar_chart()
+st.pyplot(fig)
+
+
+fig, ax = grid_view()
 st.pyplot(fig)

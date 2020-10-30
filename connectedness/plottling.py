@@ -6,9 +6,6 @@ from . import load_data
 # from parse_survey_respones import load_data
 
 
-from vega_datasets import data
-
-
 def grouped_bar_chart():
     pairwise_df = load_data()
 
@@ -42,6 +39,19 @@ def grouped_bar_chart():
     fig.tight_layout()
 
     return fig, ax
+
+
+def grid_view():
+    pairwise_df = load_data()
+    fig, ax = plt.subplots()
+    ax.imshow(pairwise_df)
+
+    ax.set_xticks()
+    ax.set_xticklabels(pairwise_df.index.tolist())
+    ax.set_yticklabels(pairwise_df.index.tolist())
+
+    return fig, ax
+
 
 
 if __name__ == "__main__":
