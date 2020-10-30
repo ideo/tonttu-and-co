@@ -20,7 +20,8 @@ st.dataframe(df)
 
 
 observers = observable("Force Graph",
-    notebook="@d3/force-directed-graph",
+    # notebook="@d3/force-directed-graph",
+    notebook="d/82546d267834ec0a",
     targets=["chart"],
     observe=["data"])
 
