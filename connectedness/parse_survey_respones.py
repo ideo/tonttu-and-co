@@ -27,6 +27,15 @@ def load_data():
     return df
 
 
+def load_tsunagi_demo_data():
+    filename = Path("connectedness/tsunagi_data.csv")
+    df = pd.read_csv(filename)
+    df.rename(columns={"Unnamed: 0": ""}, inplace=True)
+    df.set_index("", inplace=True)
+    return df
+
+
 if __name__ == "__main__":
-    df = load_data()
+    # df = load_data()
+    df = load_tsunagi_demo_data()
     print(df)
