@@ -4,5 +4,7 @@ Here is the [Observable Notebook](https://observablehq.com/@gambingo/force-direc
 the d3 visualizations are hosted.
 
 ### To-Do
-- [ ] Either add numbers to the chart, or alphabetize the table
+- [ ] Either add numbers to the chart or alphabetize the table
 - [ ] Use Ame's network diagram cause it's much prettier
+– [ ] Basic Bar Charts in Vega
+– [ ] Explore groupings and prompts programmatically
