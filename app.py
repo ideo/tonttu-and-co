@@ -37,7 +37,3 @@ st.subheader("Perceived Differences")
 st.write("Compare how you perceive others versus how others perceive you.")
 fig, ax = grouped_bar_chart()
 st.pyplot(fig)
-
-
-# fig, ax = grid_view()
-# st.pyplot(fig)

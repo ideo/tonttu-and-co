@@ -42,20 +42,8 @@ def grouped_bar_chart():
     return fig, ax
 
 
-def grid_view():
-    pairwise_df = load_data()
-    fig, ax = plt.subplots()
-    ax.imshow(pairwise_df)
-
-    ax.set_xticklabels(pairwise_df.index.tolist())
-    ax.set_yticklabels(pairwise_df.index.tolist())
-
-    return fig, ax
-
-
 @st.cache
 def heatmap(pairwise_df):
-    # pairwise_df = load_data()
     values = []
     for ind in pairwise_df.index.tolist():
         for col in pairwise_df.columns:
@@ -71,11 +59,13 @@ def heatmap(pairwise_df):
         "encoding": {
             "y": {
                 "field": "Your Perception",
-                "type": "nominal"
+                "type": "nominal",
+                "sort": None,
                 },
             "x": {
                 "field": "Others Perception",
-                "type": "nominal"
+                "type": "nominal",
+                "sort": None,
                 },
             "fill": {
                 "field": "Rating",
@@ -93,6 +83,7 @@ def heatmap(pairwise_df):
         },
     }
 
+    # print(pairwise_df, values)
     return values, vega_light_spec
 
 
