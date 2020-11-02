@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import streamlit as st
 
 from . import load_data
 # from parse_survey_respones import load_data
@@ -52,8 +53,48 @@ def grid_view():
     return fig, ax
 
 
+@st.cache
+def heatmap(pairwise_df):
+    # pairwise_df = load_data()
+    values = []
+    for ind in pairwise_df.index.tolist():
+        for col in pairwise_df.columns:
+            values.append({
+                "Your Perception":      ind,
+                "Others Perception":   col,
+                "Rating":               pairwise_df.loc[ind][col] 
+                })
+
+    vega_light_spec = {
+        "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+        "mark": {"type": "rect", "strokeWidth": 2},
+        "encoding": {
+            "y": {
+                "field": "Your Perception",
+                "type": "nominal"
+                },
+            "x": {
+                "field": "Others Perception",
+                "type": "nominal"
+                },
+            "fill": {
+                "field": "Rating",
+                "type": "quantitative"
+                },
+        },
+        "config": {
+            "scale": {
+                "bandPaddingInner": 0,
+                "bandPaddingOuter": 0
+                },
+            "view": {"step": 40},
+            "range": {"ramp": {"scheme": "yellowgreenblue"}},
+            "axis": {"domain": False}
+        },
+    }
+
+    return values, vega_light_spec
+
 
 if __name__ == "__main__":
-    # grouped_bar_chart()
-    source = data.barley()
-    print(source)
+    heatmap()

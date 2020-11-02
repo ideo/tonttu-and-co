@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import pandas as pd
+import streamlit as st
 
 
 # def load_data():
@@ -27,6 +28,7 @@ import pandas as pd
 #     return df
 
 
+@st.cache
 def load_data():
     filename = Path("connectedness/tsunagi_data.csv")
     df = pd.read_csv(filename)

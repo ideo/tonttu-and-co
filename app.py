@@ -1,8 +1,9 @@
 import streamlit as st
 from streamlit_observable import observable
+# from streamlit_vega_lite import vega_lite_component
 # import matplotlib.pyplot as plt
 
-from connectedness import load_data, grouped_bar_chart, grid_view
+from connectedness import load_data, grouped_bar_chart, heatmap
 
 
 st.title("Tonttu & Co. is here to help!")
@@ -13,8 +14,10 @@ they felt to each other team member. Here is the data they collected:
 """
 st.write(msg)
 
-df = load_data()
-st.table(df)
+pairwise_df = load_data()
+st.table(pairwise_df)
+values, vega_light_spec = heatmap(pairwise_df)
+st.vega_lite_chart(values, vega_light_spec)
 
 
 st.header("Explore")
@@ -36,5 +39,5 @@ fig, ax = grouped_bar_chart()
 st.pyplot(fig)
 
 
-fig, ax = grid_view()
-st.pyplot(fig)
+# fig, ax = grid_view()
+# st.pyplot(fig)

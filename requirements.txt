@@ -2,4 +2,5 @@ numpy
 pandas
 streamlit
 streamlit-observable
+streamlit-vega-lite
 matplotlib

@@ -1,2 +1,2 @@
 from .parse_survey_respones import load_data
-from .plottling import grouped_bar_chart, grid_view
+from .plottling import grouped_bar_chart, heatmap
