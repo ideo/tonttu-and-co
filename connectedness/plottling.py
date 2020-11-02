@@ -99,9 +99,14 @@ def vega_grouped_bar_chart(pairwise_df):
     yours = your_connectedness.reset_index().rename(columns={"": "Name"})
     others = connections_to_you.reset_index().rename(columns={"index": "Name"})
 
+    useful_df = yours.rename(columns={"Rating": "Your Perception"}).set_index("Name").join(
+        others.rename(columns={"Rating": "Others' Perception"}).set_index("Name")
+    )
+    useful_df["Difference"] = useful_df["Your Perception"] - useful_df["Others' Perception"]
+
     yours["Direction"] = pd.Series(["Your Ratings of Others"]*yours.shape[0])
     others["Direction"] = pd.Series(["Others' Ratings of You"]*others.shape[0])
-    df = yours.append(others, ignore_index=True)
+    vega_df = yours.append(others, ignore_index=True)
     
     spec = {
         "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
@@ -110,7 +115,7 @@ def vega_grouped_bar_chart(pairwise_df):
         "encoding": {
             "column": {
                 "field": "Name", "type": "nominal", "spacing": 10,
-                "title": "How Do Your Perceptions Differ From Others' Perception of You?",
+                "title": "Differences in Perceived Connectedness",
             },
             "y": {
                 "aggregate": "sum", "field": "Rating",
@@ -132,7 +137,7 @@ def vega_grouped_bar_chart(pairwise_df):
         }
     }
 
-    return df, spec
+    return useful_df, vega_df, spec
 
 
 if __name__ == "__main__":

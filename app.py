@@ -21,8 +21,38 @@ st.vega_lite_chart(values, vega_light_spec)
 
 
 st.header("Perceived Differences")
-df, spec = vega_grouped_bar_chart(pairwise_df)
-st.vega_lite_chart(df, spec)
+st.write("How do your perceptions differ from others' perctions of you?")
+differences, vega_df, spec = vega_grouped_bar_chart(pairwise_df)
+st.vega_lite_chart(vega_df, spec)
+
+threshold = st.sidebar.slider("Threshold for Noticeable Difference", 
+    min_value=0, 
+    max_value=10,
+    value=5)
+
+# noticeable = differences[abs(differences["Difference"]) >= threshold]
+# st.dataframe(noticeable)
+st.dataframe(differences)
+
+name = st.selectbox("Please chooose your name.", differences.index.tolist())
+individual = differences.loc[name]
+
+if abs(individual["Difference"]) < threshold:
+    msg = f"""
+    {name}, your perception of your connectedness isnot noticeably different 
+    than that of your collegues.
+    """
+elif individual["Difference"] >= threshold:
+    msg = f"""
+    {name}, you rated that you feel more connected to your collegues than 
+    they did to you.
+    """
+else:
+    msg = f"""
+    {name}, your collegues feel more connected to you than you do to them.
+    """
+
+st.write(msg)
 
 
 st.header("Explore the Connections Among Your Team")
