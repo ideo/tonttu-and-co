@@ -60,12 +60,12 @@ def heatmap(pairwise_df):
             "y": {
                 "field": "Your Perception",
                 "type": "nominal",
-                "sort": None,
+                # "sort": None,
                 },
             "x": {
                 "field": "Others Perception",
                 "type": "nominal",
-                "sort": None,
+                # "sort": None,
                 },
             "fill": {
                 "field": "Rating",
