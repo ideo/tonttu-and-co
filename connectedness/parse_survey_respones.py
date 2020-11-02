@@ -34,6 +34,10 @@ def load_data():
     df = pd.read_csv(filename)
     df.rename(columns={"Unnamed: 0": ""}, inplace=True)
     df.set_index("", inplace=True)
+
+    df.sort_index(inplace=True)
+    alphabetized_cols = sorted(df.columns)
+    df = df[alphabetized_cols]
     return df
 
 
