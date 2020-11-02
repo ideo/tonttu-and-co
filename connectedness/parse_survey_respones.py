@@ -1,4 +1,6 @@
 from pathlib import Path
+import pprint
+import json
 
 import pandas as pd
 import streamlit as st
@@ -41,6 +43,32 @@ def load_data():
     return df
 
 
+def make_network_graph_json(pairwise_df, min_link_strength=0):
+    nodes = [{"id": name, "group": 1} for name in pairwise_df.index.tolist()]
+    
+    links = []
+    for ind in pairwise_df.index.tolist():
+        for col in pairwise_df.columns:
+            if ind != col:
+                links.append({
+                    "source":   ind,
+                    "target":   col,
+                    "value":    pairwise_df.loc[ind][col] + pairwise_df.loc[col][ind]
+                })
+
+    links = [l for l in links if l["value"] >= min_link_strength]
+
+    data = {"nodes": nodes, "links": links}
+    with open("connectedness/connectedness.json", "w") as outfile:  
+        json.dump(data, outfile) 
+
+    # return data
+
+
+
 if __name__ == "__main__":
     df = load_data()
-    print(df)
+    make_network_graph_json(df, min_link_strength=8)
+
+    # pp = pprint.PrettyPrinter(indent=4)
+    # pp.pprint(data)

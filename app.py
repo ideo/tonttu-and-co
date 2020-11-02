@@ -32,7 +32,7 @@ threshold = st.sidebar.slider("Threshold for Noticeable Difference",
 
 # noticeable = differences[abs(differences["Difference"]) >= threshold]
 # st.dataframe(noticeable)
-st.dataframe(differences)
+# st.dataframe(differences)
 
 name = st.selectbox("Please chooose your name.", differences.index.tolist())
 individual = differences.loc[name]
