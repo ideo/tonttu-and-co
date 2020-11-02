@@ -87,5 +87,53 @@ def heatmap(pairwise_df):
     return values, vega_light_spec
 
 
+@st.cache
+def vega_grouped_bar_chart(pairwise_df):
+    # pairwise_df = load_data()
+    your_connectedness = pd.DataFrame(pairwise_df.sum(axis=1))
+    connections_to_you = pd.DataFrame(pairwise_df.sum(axis=0))
+
+    your_connectedness.rename(columns={0: "Rating"}, inplace=True)
+    connections_to_you.rename(columns={0: "Rating"}, inplace=True)
+
+    yours = your_connectedness.reset_index().rename(columns={"": "Name"})
+    others = connections_to_you.reset_index().rename(columns={"index": "Name"})
+
+    yours["Direction"] = pd.Series(["Your Ratings of Others"]*yours.shape[0])
+    others["Direction"] = pd.Series(["Others' Ratings of You"]*others.shape[0])
+    df = yours.append(others, ignore_index=True)
+    
+    spec = {
+        "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+        "mark": "bar",
+        "mark": "bar",
+        "encoding": {
+            "column": {
+                "field": "Name", "type": "nominal", "spacing": 10,
+                "title": "How Do Your Perceptions Differ From Others' Perception of You?",
+            },
+            "y": {
+                "aggregate": "sum", "field": "Rating",
+                "title": "Sum of All Ratings",
+                "axis": {"grid": False}
+            },
+            "x": {
+                "field": "Direction",
+                "axis": {"title": ""}
+            },
+            "color": {
+                "field": "Direction",
+                "scale": {"range": ["#675193", "#ca8861"]}
+            }
+        },
+        "config": {
+            "view": {"stroke": "transparent"},
+            "axis": {"domainWidth": 1},
+        }
+    }
+
+    return df, spec
+
+
 if __name__ == "__main__":
-    heatmap()
+    df, spec = vega_grouped_bar_chart()

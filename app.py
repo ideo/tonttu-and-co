@@ -3,7 +3,7 @@ from streamlit_observable import observable
 # from streamlit_vega_lite import vega_lite_component
 # import matplotlib.pyplot as plt
 
-from connectedness import load_data, grouped_bar_chart, heatmap
+from connectedness import load_data, heatmap, vega_grouped_bar_chart
 
 
 st.title("Tonttu & Co. is here to help!")
@@ -20,20 +20,15 @@ values, vega_light_spec = heatmap(pairwise_df)
 st.vega_lite_chart(values, vega_light_spec)
 
 
-st.header("Explore")
-msg = """
-Here are several attempts at visualizing and understanding that data:
-"""
-st.write(msg)
+st.header("Perceived Differences")
+df, spec = vega_grouped_bar_chart(pairwise_df)
+st.vega_lite_chart(df, spec)
 
+
+st.header("Explore the Connections Among Your Team")
 observers = observable("Force Graph",
     notebook="@gambingo/force-directed-graph",
     targets=["chart"],
     observe=["data"])
 
 force_graph = observers.get("data")
-
-st.subheader("Perceived Differences")
-st.write("Compare how you perceive others versus how others perceive you.")
-fig, ax = grouped_bar_chart()
-st.pyplot(fig)
