@@ -39,7 +39,7 @@ individual = differences.loc[name]
 
 if abs(individual["Difference"]) < threshold:
     msg = f"""
-    {name}, your perception of your connectedness isnot noticeably different 
+    {name}, your perception of your connectedness is not noticeably different 
     than that of your collegues.
     """
 elif individual["Difference"] >= threshold:
