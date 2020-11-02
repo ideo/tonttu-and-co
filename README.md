@@ -5,7 +5,13 @@ the d3 visualizations are hosted.
 
 ### To-Do
 - [ ] Automate survey --> JSON
-- [ ] Either add numbers to the chart or alphabetize the table
+- [x] Alphabetize 
+- [ ] Add numbers to heatmap
 - [ ] Use Ame's network diagram cause it's much prettier
-- [ ] Basic Bar Charts in Vega
-- [ ] Explore groupings and prompts programmatically
+- [x] Basic Bar Charts in Vega
+- [ ] Explore groupings and prompts programmatically
+
+
+### Brainstom Ideas
+- [ ] Select your name and see takeaways
+- [ ] Change the network diagram so it's more useful, (e.g. less connections, longer connections)
