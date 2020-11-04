@@ -1,9 +1,11 @@
 import streamlit as st
 from streamlit_observable import observable
 # from streamlit_vega_lite import vega_lite_component
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-from connectedness import load_data, heatmap, vega_grouped_bar_chart
+from connectedness import (load_data, heatmap, vega_grouped_bar_chart, 
+    clustermap, reorder_dataframe, sorted_heatmap)
 
 
 st.title("Tsunagi Connectedness Survey")
@@ -16,26 +18,37 @@ First, here are the raw numbers from the survey.
 """
 st.write(msg)
 
-pairwise_df = load_data()
-st.table(pairwise_df)
+pairwise_nan, pairwise_zeros = load_data()
+st.table(pairwise_nan)
 
 msg = """
-And here is the data displayed in an hopefully more helpful way.
+Here we have attempted to group the data in a useful way. Explore the two 
+available groupings.
 """
 st.write(msg)
-values, vega_light_spec = heatmap(pairwise_df)
-st.vega_lite_chart(values, vega_light_spec)
+clustergrid, row_index, col_index = clustermap(pairwise_zeros)
+st.pyplot(clustergrid)
 
+fig, ax = sorted_heatmap(pairwise_nan, row_index)
+st.pyplot(fig)
+
+fig, ax = sorted_heatmap(pairwise_nan, col_index)
+st.pyplot(fig)
+
+# values, vega_light_spec = heatmap(new_df)
+# st.vega_lite_chart(values, vega_light_spec)
 
 st.header("Perceived Differences")
 st.write("How do your perceptions differ from others' perctions of you?")
-differences, vega_df, spec = vega_grouped_bar_chart(pairwise_df)
+differences, vega_df, spec = vega_grouped_bar_chart(pairwise_nan)
 st.vega_lite_chart(vega_df, spec)
 
-threshold = st.sidebar.slider("Threshold for Noticeable Difference", 
-    min_value=0, 
-    max_value=10,
-    value=5)
+threshold = 5
+# threshold = st.sidebar.slider("Threshold for Noticeable Difference", 
+#     min_value=0, 
+#     max_value=10,
+#     value=5)
+
 
 # noticeable = differences[abs(differences["Difference"]) >= threshold]
 # st.dataframe(noticeable)

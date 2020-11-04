@@ -39,8 +39,10 @@ def load_data():
 
     df.sort_index(inplace=True)
     alphabetized_cols = sorted(df.columns)
-    df = df[alphabetized_cols]
-    return df
+    df_nan = df[alphabetized_cols]
+    df_zeros = df.fillna(value=0)
+
+    return df_nan, df_zeros
 
 
 def make_network_graph_json(pairwise_df, min_link_strength=0):

@@ -1,7 +1,10 @@
+from copy import copy
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import streamlit as st
+import seaborn as sns
 
 from . import load_data
 # from parse_survey_respones import load_data
@@ -43,14 +46,15 @@ def grouped_bar_chart():
 
 
 @st.cache
-def heatmap(pairwise_df):
+def heatmap(df):
+    # Format plot
     values = []
-    for ind in pairwise_df.index.tolist():
-        for col in pairwise_df.columns:
+    for ind in df.index.tolist():
+        for col in df.columns:
             values.append({
                 "Your Perception":      ind,
                 "Others Perception":   col,
-                "Rating":               pairwise_df.loc[ind][col] 
+                "Rating":               df.loc[ind][col] 
                 })
 
     vega_light_spec = {
@@ -60,12 +64,12 @@ def heatmap(pairwise_df):
             "y": {
                 "field": "Your Perception",
                 "type": "nominal",
-                # "sort": None,
+                "sort": None,
                 },
             "x": {
                 "field": "Others Perception",
                 "type": "nominal",
-                # "sort": None,
+                "sort": None,
                 },
             "fill": {
                 "field": "Rating",
@@ -83,7 +87,7 @@ def heatmap(pairwise_df):
         },
     }
 
-    # print(pairwise_df, values)
+    # print(df, values)
     return values, vega_light_spec
 
 
@@ -140,5 +144,44 @@ def vega_grouped_bar_chart(pairwise_df):
     return useful_df, vega_df, spec
 
 
+# Do not cache this function. Seems to crash streamlit
+def clustermap(pairwise_df):
+    # df = copy(pairwise_df)
+    clustergrid = sns.clustermap(pairwise_df)
+    row_index = clustergrid.dendrogram_row.reordered_ind
+    col_index = clustergrid.dendrogram_col.reordered_ind
+    return clustergrid, row_index, col_index
+
+
+def reorder_dataframe(df, index_order):
+    # Reorder from clustering
+    curr_positions = {pos:name for pos, name in enumerate(df.index)}
+    new_index = [curr_positions[i] for i in index_order]
+
+    new_df = pd.DataFrame(data=df, index=new_index, columns=new_index)
+    print(new_df)
+    return new_df
+
+
+# @st.cache
+# def sorted_heatmap(pairwise_nan, row_index, col_index):
+#     row_df = reorder_dataframe(pairwise_nan, row_index)
+#     col_df = reorder_dataframe(pairwise_nan, col_index)
+
+#     fig, ax = plt.subplots(1, 2)
+#     ax[0] = sns.heatmap(row_df, ax=ax[0], cmap="mako")
+#     ax[1] = sns.heatmap(col_df, ax=ax[1], cmap="mako")
+#     return fig, ax
+
+
+def sorted_heatmap(df, new_index):
+    new_df = reorder_dataframe(df, new_index)
+
+    fig, ax = plt.subplots()
+    ax = sns.heatmap(new_df, ax=ax, cmap="mako")
+    return fig, ax
+
+
 if __name__ == "__main__":
-    df, spec = vega_grouped_bar_chart()
+    pairwise_df = load_data()
+    clustergrid = clustermap(pairwise_df)
