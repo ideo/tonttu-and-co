@@ -66,6 +66,6 @@ st.header("Explore the Connections Among Your Team")
 observers = observable("Force Graph",
     notebook="@gambingo/force-directed-graph",
     targets=["chart"],
-    observe=["data"])
+    observe=["data", "chart"])
 
 force_graph = observers.get("data")
