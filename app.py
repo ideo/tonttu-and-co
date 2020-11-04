@@ -6,16 +6,23 @@ from streamlit_observable import observable
 from connectedness import load_data, heatmap, vega_grouped_bar_chart
 
 
-st.title("Tonttu & Co. is here to help!")
+st.title("Tsunagi Connectedness Survey")
 msg = """
-A few months ago, a large IDEO attempted to measure how connected they were 
-as a team. Each team member gave a rating on a scale from 1 to 10 on how close 
-they felt to each other team member. Here is the data they collected:
+This survey is an attempt to allow you to easily check your teams' level of 
+connectedness. Periodically, your team can take the simple survey you filled 
+out. Then, here, you can explore the results and discuss.
+
+First, here are the raw numbers from the survey.
 """
 st.write(msg)
 
 pairwise_df = load_data()
 st.table(pairwise_df)
+
+msg = """
+And here is the data displayed in an hopefully more helpful way.
+"""
+st.write(msg)
 values, vega_light_spec = heatmap(pairwise_df)
 st.vega_lite_chart(values, vega_light_spec)
 
