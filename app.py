@@ -4,7 +4,7 @@ from streamlit_observable import observable
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-from connectedness import (load_data, heatmap, vega_grouped_bar_chart, 
+from src.connectedness import (load_data, heatmap, vega_grouped_bar_chart, 
     clustermap, sorted_heatmap, delta_plot)
 
 

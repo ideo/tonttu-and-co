@@ -33,7 +33,7 @@ import streamlit as st
 # @st.cache
 def load_data():
     try:
-        filename = Path("connectedness/tsunagi_data.csv")
+        filename = Path("src/connectedness/tsunagi_data.csv")
     except FileNotFoundError:
         filename = Path("../connectedness/tsunagi_data.csv")
 
