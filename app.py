@@ -61,7 +61,12 @@ fig, ax = clustermap(pairwise_zeros, linkage_method, cmap)
 st.pyplot(fig)
 
 st.header("Perceived Differences")
-st.write("How do your perceptions differ from others' perctions of you?")
+msg = """
+How do your perceptions differ from others' perctions of you? Below, explore 
+differing levels of overal connectedness and also mismatches between how 
+people rated others and how others rated them.
+"""
+st.write(msg)
 differences, vega_df, spec = vega_grouped_bar_chart(pairwise_nan)
 st.vega_lite_chart(vega_df, spec)
 
