@@ -176,21 +176,37 @@ def vega_grouped_bar_chart(pairwise_df):
 
 # Do not cache this function. Seems to crash streamlit
 def clustermap(pairwise_df, linkage_method, cmap):
+    # fig, ax = plt.subplots()    
     clustergrid = sns.clustermap(
         pairwise_df, 
         method=linkage_method,    # linkage
+        metric="euclidean",
+    )
+
+    row_index = clustergrid.dendrogram_row.reordered_ind
+    col_index = clustergrid.dendrogram_col.reordered_ind
+
+    new_df = reorder_dataframe(pairwise_df, row_index, col_index)
+
+    fig, ax = plt.subplots()
+    ax = sns.heatmap(new_df, 
+        ax=ax,
         cmap=cmap.lower().replace(" reverse", "_r")
-        )
+    )
+    ax.set_title("Explore the Natural Groupings in Your Team\n")
+    plt.yticks(rotation=0)
+    return fig, ax
 
-    return clustergrid
 
-
-def reorder_dataframe(df, index_order):
+def reorder_dataframe(df, row_index, col_index):
     # Reorder from clustering
     curr_positions = {pos:name for pos, name in enumerate(df.index)}
-    new_index = [curr_positions[i] for i in index_order]
+    new_row_index = [curr_positions[i] for i in row_index]
 
-    new_df = pd.DataFrame(data=df, index=new_index, columns=new_index)
+    curr_positions = {pos:name for pos, name in enumerate(df.columns)}
+    new_col_index = [curr_positions[i] for i in col_index]
+
+    new_df = pd.DataFrame(data=df, index=new_row_index, columns=new_col_index)
     return new_df
 
 

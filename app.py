@@ -42,12 +42,12 @@ linkage_method = st.sidebar.selectbox(
 cmap = st.sidebar.selectbox(
     label="Select the color scheme used by the clustered heatmap",
     options=[
-        "Viridis", 
         "Viridis Reverse", 
-        "Rocket", 
-        "Rocket Reverse", 
-        "Magma", 
-        "Magma Reverse"
+        "Viridis",  
+        "Rocket Reverse",
+        "Rocket",  
+        "Magma Reverse",
+        "Magma",
         ]
 )
 
@@ -57,8 +57,8 @@ Read more about color palettes
 """
 st.sidebar.write(msg)
 
-clustergrid = clustermap(pairwise_zeros, linkage_method, cmap)
-st.pyplot(clustergrid)
+fig, ax = clustermap(pairwise_zeros, linkage_method, cmap)
+st.pyplot(fig)
 
 st.header("Perceived Differences")
 st.write("How do your perceptions differ from others' perctions of you?")
