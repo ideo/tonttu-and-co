@@ -48,6 +48,7 @@ def grouped_bar_chart():
     return fig, ax
 
 
+# Do not cache this function. Seems to crash streamlit
 def delta_plot(pairwise_df):
     # Transform data
     your_connectedness = pd.DataFrame(pairwise_df.sum(axis=1))
@@ -76,52 +77,52 @@ def delta_plot(pairwise_df):
 
 
 # @st.cache
-def heatmap(df):
-    # Format plot
-    values = []
-    for ind in df.index.tolist():
-        for col in df.columns:
-            values.append({
-                "Your Perception":      ind,
-                "Others Perception":   col,
-                "Rating":               df.loc[ind][col] 
-                })
+# def heatmap(df):
+#     # Format plot
+#     values = []
+#     for ind in df.index.tolist():
+#         for col in df.columns:
+#             values.append({
+#                 "Your Perception":      ind,
+#                 "Others Perception":   col,
+#                 "Rating":               df.loc[ind][col] 
+#                 })
 
-    vega_light_spec = {
-        "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
-        "mark": {"type": "rect", "strokeWidth": 2},
-        "encoding": {
-            "y": {
-                "field": "Your Perception",
-                "type": "nominal",
-                "sort": None,
-                },
-            "x": {
-                "field": "Others Perception",
-                "type": "nominal",
-                "sort": None,
-                },
-            "fill": {
-                "field": "Rating",
-                "type": "quantitative"
-                },
-        },
-        "config": {
-            "scale": {
-                "bandPaddingInner": 0,
-                "bandPaddingOuter": 0
-                },
-            "view": {"step": 40},
-            "range": {"ramp": {"scheme": "yellowgreenblue"}},
-            "axis": {"domain": False}
-        },
-    }
+#     vega_light_spec = {
+#         "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+#         "mark": {"type": "rect", "strokeWidth": 2},
+#         "encoding": {
+#             "y": {
+#                 "field": "Your Perception",
+#                 "type": "nominal",
+#                 "sort": None,
+#                 },
+#             "x": {
+#                 "field": "Others Perception",
+#                 "type": "nominal",
+#                 "sort": None,
+#                 },
+#             "fill": {
+#                 "field": "Rating",
+#                 "type": "quantitative"
+#                 },
+#         },
+#         "config": {
+#             "scale": {
+#                 "bandPaddingInner": 0,
+#                 "bandPaddingOuter": 0
+#                 },
+#             "view": {"step": 40},
+#             "range": {"ramp": {"scheme": "yellowgreenblue"}},
+#             "axis": {"domain": False}
+#         },
+#     }
 
-    # print(df, values)
-    return values, vega_light_spec
+#     # print(df, values)
+#     return values, vega_light_spec
 
 
-# @st.cache
+@st.cache
 def vega_grouped_bar_chart(pairwise_df):
     # pairwise_df = load_data()
     your_connectedness = pd.DataFrame(pairwise_df.sum(axis=1))
@@ -221,12 +222,12 @@ def reorder_dataframe(df, row_index, col_index):
 #     return fig, ax
 
 
-def sorted_heatmap(df, new_index):
-    new_df = reorder_dataframe(df, new_index)
+# def sorted_heatmap(df, new_index):
+#     new_df = reorder_dataframe(df, new_index)
 
-    fig, ax = plt.subplots()
-    ax = sns.heatmap(new_df, ax=ax, cmap="mako")
-    return fig, ax
+#     fig, ax = plt.subplots()
+#     ax = sns.heatmap(new_df, ax=ax, cmap="mako")
+#     return fig, ax
 
 
 if __name__ == "__main__":

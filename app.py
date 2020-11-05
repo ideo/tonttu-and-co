@@ -4,8 +4,8 @@ from streamlit_observable import observable
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-from src.connectedness import (load_data, heatmap, vega_grouped_bar_chart, 
-    clustermap, sorted_heatmap, delta_plot)
+from src.connectedness import (load_data, vega_grouped_bar_chart, 
+    clustermap, delta_plot)
 
 
 st.title("Tsunagi Connectedness Survey")
@@ -85,31 +85,32 @@ threshold = 5
 # st.dataframe(noticeable)
 # st.dataframe(differences)
 
-name = st.selectbox("Please chooose your name.", differences.index.tolist())
-individual = differences.loc[name]
+# name = st.selectbox("Please chooose your name.", differences.index.tolist())
+# individual = differences.loc[name]
 
-if abs(individual["Difference"]) < threshold:
-    msg = f"""
-    {name}, your perception of your connectedness is not noticeably different 
-    than that of your collegues.
-    """
-elif individual["Difference"] >= threshold:
-    msg = f"""
-    {name}, you rated that you feel more connected to your collegues than 
-    they did to you.
-    """
-else:
-    msg = f"""
-    {name}, your collegues feel more connected to you than you do to them.
-    """
+# if abs(individual["Difference"]) < threshold:
+#     msg = f"""
+#     {name}, your perception of your connectedness is not noticeably different 
+#     than that of your collegues.
+#     """
+# elif individual["Difference"] >= threshold:
+#     msg = f"""
+#     {name}, you rated that you feel more connected to your collegues than 
+#     they did to you.
+#     """
+# else:
+#     msg = f"""
+#     {name}, your collegues feel more connected to you than you do to them.
+#     """
 
-st.write(msg)
+# st.write(msg)
 
 
 st.header("Explore the Connections Among Your Team")
-observers = observable("Force Graph",
-    notebook="@gambingo/force-directed-graph",
-    targets=["chart"],
-    observe=["data", "chart"])
+st.write("Coming Soon!")
+# observers = observable("Force Graph",
+#     notebook="@gambingo/force-directed-graph",
+#     targets=["chart"],
+#     observe=["data", "chart"])
 
-force_graph = observers.get("data")
+# force_graph = observers.get("data")

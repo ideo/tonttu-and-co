@@ -30,7 +30,7 @@ import streamlit as st
 #     return df
 
 
-# @st.cache
+@st.cache
 def load_data():
     try:
         filename = Path("src/connectedness/tsunagi_data.csv")
