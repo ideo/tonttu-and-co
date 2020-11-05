@@ -30,9 +30,13 @@ import streamlit as st
 #     return df
 
 
-@st.cache
+# @st.cache
 def load_data():
-    filename = Path("connectedness/tsunagi_data.csv")
+    try:
+        filename = Path("connectedness/tsunagi_data.csv")
+    except FileNotFoundError:
+        filename = Path("../connectedness/tsunagi_data.csv")
+
     df = pd.read_csv(filename)
     df.rename(columns={"Unnamed: 0": ""}, inplace=True)
     df.set_index("", inplace=True)

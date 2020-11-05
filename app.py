@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 from connectedness import (load_data, heatmap, vega_grouped_bar_chart, 
-    clustermap, reorder_dataframe, sorted_heatmap)
+    clustermap, sorted_heatmap, delta_plot)
 
 
 st.title("Tsunagi Connectedness Survey")
@@ -22,26 +22,52 @@ pairwise_nan, pairwise_zeros = load_data()
 st.table(pairwise_nan)
 
 msg = """
-Here we have attempted to group the data in a useful way. Explore the two 
-available groupings.
+Below, explore the natural groups that have formed within your team. Darker 
+colors represent more closely connected people. **UPDATE**
 """
 st.write(msg)
-clustergrid, row_index, col_index = clustermap(pairwise_zeros)
+
+
+msg = """
+Hey, Team! Play with the settings for this prototype here. We can pick what 
+we like and then disable this sidebar when we deliver it to WorkX.
+"""
+st.sidebar.write(msg)
+
+linkage_method = st.sidebar.selectbox(
+    label="Select the sorting method used by the clustered heatmap",
+    options=["single", "complete", "average", "ward"]
+)
+
+cmap = st.sidebar.selectbox(
+    label="Select the color scheme used by the clustered heatmap",
+    options=[
+        "Viridis", 
+        "Viridis Reverse", 
+        "Rocket", 
+        "Rocket Reverse", 
+        "Magma", 
+        "Magma Reverse"
+        ]
+)
+
+msg = """
+Read more about color palettes 
+[here](https://seaborn.pydata.org/tutorial/color_palettes.html).
+"""
+st.sidebar.write(msg)
+
+clustergrid = clustermap(pairwise_zeros, linkage_method, cmap)
 st.pyplot(clustergrid)
-
-fig, ax = sorted_heatmap(pairwise_nan, row_index)
-st.pyplot(fig)
-
-fig, ax = sorted_heatmap(pairwise_nan, col_index)
-st.pyplot(fig)
-
-# values, vega_light_spec = heatmap(new_df)
-# st.vega_lite_chart(values, vega_light_spec)
 
 st.header("Perceived Differences")
 st.write("How do your perceptions differ from others' perctions of you?")
 differences, vega_df, spec = vega_grouped_bar_chart(pairwise_nan)
 st.vega_lite_chart(vega_df, spec)
+
+fig, ax = delta_plot(pairwise_nan)
+st.pyplot(fig)
+
 
 threshold = 5
 # threshold = st.sidebar.slider("Threshold for Noticeable Difference", 

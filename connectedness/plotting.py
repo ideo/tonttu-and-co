@@ -10,6 +10,9 @@ from . import load_data
 # from parse_survey_respones import load_data
 
 
+sns.set_theme()
+
+
 def grouped_bar_chart():
     pairwise_df = load_data()
 
@@ -45,7 +48,34 @@ def grouped_bar_chart():
     return fig, ax
 
 
-@st.cache
+def delta_plot(pairwise_df):
+    # Transform data
+    your_connectedness = pd.DataFrame(pairwise_df.sum(axis=1))
+    connections_to_you = pd.DataFrame(pairwise_df.sum(axis=0))
+
+    your_connectedness.rename(columns={0: "Your Perception"}, inplace=True)
+    connections_to_you.rename(columns={0: "Others' Perception"}, inplace=True)
+    df = your_connectedness.join(connections_to_you)
+    df["Delta"] = df["Your Perception"] - df["Others' Perception"]
+
+    # Plot
+    fig, ax = plt.subplots()
+    names = df.index.tolist()
+    deltas = [d if d != 0.0 else 0.1 for d in df.Delta.tolist()]
+    y_pos = np.arange(len(names))
+
+    ax.barh(y_pos, deltas, align="center")
+    ax.set_yticks(y_pos)
+    ax.set_yticklabels(names)
+    ax.grid(False)
+    ax.set_title("Difference Between Total Ratings By and For Each Person\n")
+    ax.set_xlabel("\nHigher Ratings For You <–––––> Higher Ratings By You       ")
+    plt.tight_layout()
+    return fig, ax
+
+
+
+# @st.cache
 def heatmap(df):
     # Format plot
     values = []
@@ -91,7 +121,7 @@ def heatmap(df):
     return values, vega_light_spec
 
 
-@st.cache
+# @st.cache
 def vega_grouped_bar_chart(pairwise_df):
     # pairwise_df = load_data()
     your_connectedness = pd.DataFrame(pairwise_df.sum(axis=1))
@@ -145,12 +175,14 @@ def vega_grouped_bar_chart(pairwise_df):
 
 
 # Do not cache this function. Seems to crash streamlit
-def clustermap(pairwise_df):
-    # df = copy(pairwise_df)
-    clustergrid = sns.clustermap(pairwise_df)
-    row_index = clustergrid.dendrogram_row.reordered_ind
-    col_index = clustergrid.dendrogram_col.reordered_ind
-    return clustergrid, row_index, col_index
+def clustermap(pairwise_df, linkage_method, cmap):
+    clustergrid = sns.clustermap(
+        pairwise_df, 
+        method=linkage_method,    # linkage
+        cmap=cmap.lower().replace(" reverse", "_r")
+        )
+
+    return clustergrid
 
 
 def reorder_dataframe(df, index_order):
@@ -159,7 +191,6 @@ def reorder_dataframe(df, index_order):
     new_index = [curr_positions[i] for i in index_order]
 
     new_df = pd.DataFrame(data=df, index=new_index, columns=new_index)
-    print(new_df)
     return new_df
 
 
