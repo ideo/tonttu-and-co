@@ -75,54 +75,7 @@ def delta_plot(pairwise_df):
     return fig, ax
 
 
-
 # @st.cache
-# def heatmap(df):
-#     # Format plot
-#     values = []
-#     for ind in df.index.tolist():
-#         for col in df.columns:
-#             values.append({
-#                 "Your Perception":      ind,
-#                 "Others Perception":   col,
-#                 "Rating":               df.loc[ind][col] 
-#                 })
-
-#     vega_light_spec = {
-#         "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
-#         "mark": {"type": "rect", "strokeWidth": 2},
-#         "encoding": {
-#             "y": {
-#                 "field": "Your Perception",
-#                 "type": "nominal",
-#                 "sort": None,
-#                 },
-#             "x": {
-#                 "field": "Others Perception",
-#                 "type": "nominal",
-#                 "sort": None,
-#                 },
-#             "fill": {
-#                 "field": "Rating",
-#                 "type": "quantitative"
-#                 },
-#         },
-#         "config": {
-#             "scale": {
-#                 "bandPaddingInner": 0,
-#                 "bandPaddingOuter": 0
-#                 },
-#             "view": {"step": 40},
-#             "range": {"ramp": {"scheme": "yellowgreenblue"}},
-#             "axis": {"domain": False}
-#         },
-#     }
-
-#     # print(df, values)
-#     return values, vega_light_spec
-
-
-@st.cache
 def vega_grouped_bar_chart(pairwise_df):
     # pairwise_df = load_data()
     your_connectedness = pd.DataFrame(pairwise_df.sum(axis=1))
@@ -209,25 +162,6 @@ def reorder_dataframe(df, row_index, col_index):
 
     new_df = pd.DataFrame(data=df, index=new_row_index, columns=new_col_index)
     return new_df
-
-
-# @st.cache
-# def sorted_heatmap(pairwise_nan, row_index, col_index):
-#     row_df = reorder_dataframe(pairwise_nan, row_index)
-#     col_df = reorder_dataframe(pairwise_nan, col_index)
-
-#     fig, ax = plt.subplots(1, 2)
-#     ax[0] = sns.heatmap(row_df, ax=ax[0], cmap="mako")
-#     ax[1] = sns.heatmap(col_df, ax=ax[1], cmap="mako")
-#     return fig, ax
-
-
-# def sorted_heatmap(df, new_index):
-#     new_df = reorder_dataframe(df, new_index)
-
-#     fig, ax = plt.subplots()
-#     ax = sns.heatmap(new_df, ax=ax, cmap="mako")
-#     return fig, ax
 
 
 if __name__ == "__main__":

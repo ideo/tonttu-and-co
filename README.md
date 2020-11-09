@@ -6,10 +6,10 @@ the d3 visualizations are hosted.
 ### To-Do
 - [ ] Automate survey --> JSON
 - [x] Alphabetize 
-- [ ] Add numbers to heatmap
-- [ ] Use Ame's network diagram cause it's much prettier
+- [ ] ~~Add numbers to heatmap~~
+- [ ] ~~Use Ame's network diagram cause it's much prettier~~
 - [x] Basic Bar Charts in Vega
-- [ ] Explore groupings and prompts programmatically
+- [x] Explore groupings and prompts programmatically
 
 
 ### Brainstom Ideas

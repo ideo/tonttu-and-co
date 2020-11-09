@@ -30,12 +30,10 @@ import streamlit as st
 #     return df
 
 
-@st.cache
+# @st.cache
 def load_data():
-    try:
-        filename = Path("src/connectedness/tsunagi_data.csv")
-    except FileNotFoundError:
-        filename = Path("../connectedness/tsunagi_data.csv")
+    filename = Path("src/connectedness/tsunagi_data.csv")
+    # filename = Path("../src/connectedness/tsunagi_data.csv")
 
     df = pd.read_csv(filename)
     df.rename(columns={"Unnamed: 0": ""}, inplace=True)
@@ -71,10 +69,57 @@ def make_network_graph_json(pairwise_df, min_link_strength=0):
     # return data
 
 
+def make_graphcommons_csv(pairwise_df, min_link_strength=0):
+    edge_columns = [
+        "From Type",
+        "From Name",
+        "Edge",
+    	"To Type",
+        "To Name",
+        "Weight"
+    ]
+    edge_data = []
+
+    node_columns = [
+        "Type",
+        "Name",
+        "Description",
+        "Image",
+        "Reference",
+    ]
+    node_data = []
+
+    for ind in pairwise_df.index.tolist():
+        node_data.append({
+                    "Type":         "Person",
+                    "Name":         ind,
+                    "Description":  "tktk",
+                    "Image":        "tktk",
+                    "Reference":    "tktk",
+                })
+
+        for col in pairwise_df.columns:
+            if ind != col:
+                edge_data.append({
+                    "From Type":    "Person",
+                    "From Name":    ind,
+                    "Edge":         "Rated",
+                    "To Type":      "Person",
+                    "To Name":      col,
+                    "Weight":       int(pairwise_df.loc[ind][col]), #graphcommons rejects floats
+                })
+
+    filepath = Path("src/connectedness/graphcommons")
+    graphcommons_edges = pd.DataFrame(edge_data, columns=edge_columns)
+    graphcommons_edges.to_csv(filepath / Path("graphcommons_edges.csv"), index=False)
+    graphcommons_nodes = pd.DataFrame(node_data, columns=node_columns)
+    graphcommons_nodes.to_csv(filepath / Path("graphcommons_nodes.csv"), index=False)
+
 
 if __name__ == "__main__":
-    df = load_data()
-    make_network_graph_json(df, min_link_strength=8)
+    df_nan, df_zeros = load_data()
+    # make_network_graph_json(df, min_link_strength=8)
+    make_graphcommons_csv(df_nan)
 
     # pp = pprint.PrettyPrinter(indent=4)
     # pp.pprint(data)
