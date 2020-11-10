@@ -4,7 +4,7 @@ from streamlit_observable import observable
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-from src.connectedness import (load_data, vega_grouped_bar_chart, 
+from src.connectedness import (load_tsunagi_team_data, vega_grouped_bar_chart, 
     clustermap, delta_plot)
 
 
@@ -18,7 +18,7 @@ First, here are the raw numbers from the survey.
 """
 st.write(msg)
 
-pairwise_nan, pairwise_zeros = load_data()
+pairwise_nan, pairwise_zeros = load_tsunagi_team_data()
 st.table(pairwise_nan)
 
 msg = """
@@ -72,6 +72,19 @@ st.vega_lite_chart(vega_df, spec)
 
 fig, ax = delta_plot(pairwise_nan)
 st.pyplot(fig)
+
+
+st.header("What does Connectedness mean to you?")
+msg = """
+The survey asked:
+> ここまでどのようなことをイメージして「つながり度合い」を決めましたか？皆さんにとって
+「つながり」を感じるときの定義はありますか？ (To you, what makes you feel 
+like you are strongly connected with someone?) 
+
+Here are those responses:
+"""
+st.write(msg)
+# st.table(free_response_columns)
 
 
 threshold = 5
