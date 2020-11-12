@@ -84,6 +84,12 @@ def parse_mitsui_survey_results():
     df.rename(columns=email_to_name, inplace=True)
     df.set_index("Name", inplace=True)
 
+    free_response.reset_index(inplace=True)
+    free_response["Email Address"] = free_response["Email Address"].apply(lambda e: email_to_name[e])
+    free_response.rename(columns={"Email Address": "Name"}, inplace=True)
+    free_response.set_index("Name", inplace=True)
+
+
     # Fill diagonal
     np.fill_diagonal(df.values, -1)
     df_zeros = df.replace(-1, 0)

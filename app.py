@@ -85,10 +85,10 @@ The survey asked each person to describe what connectedness meant to them.
 Here are those responses.
 """
 st.write(msg)
-st.table(free_responses.reset_index().drop(columns=["Email Address"]))
+# st.table(free_responses.reset_index().drop(columns=["Email Address"]))
+st.table(free_responses)
 
-
-threshold = 5
+# threshold = 5
 # threshold = st.sidebar.slider("Threshold for Noticeable Difference", 
 #     min_value=0, 
 #     max_value=10,
