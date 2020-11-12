@@ -1,5 +1,5 @@
 import streamlit as st
-from streamlit_observable import observable
+# from streamlit_observable import observable
 # from streamlit_vega_lite import vega_lite_component
 import matplotlib.pyplot as plt
 import seaborn as sns

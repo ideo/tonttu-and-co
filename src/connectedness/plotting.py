@@ -158,6 +158,7 @@ def clustermap(pairwise_df, linkage_method, cmap):
     return fig, ax
 
 
+# Don't cache this is fucks shit up
 def load_clustermap(cmap):
     filepath = Path("src/connectedness/data/")
     new_df = pd.read_pickle(filepath / Path("clustered_df.pkl"))

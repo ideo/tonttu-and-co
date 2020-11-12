@@ -1,6 +1,5 @@
 numpy
 pandas
 streamlit
-streamlit-observable
 matplotlib
 seaborn
