@@ -23,12 +23,13 @@ st.write(msg)
 pairwise_nan, pairwise_zeros, free_responses = load_saved_survey_results()
 st.dataframe(pairwise_nan)
 
+
+st.header("Groups")
 msg = """
 Below, explore the natural groups that have formed within your team. Darker 
 colors represent more closely connected people.
 """
 st.write(msg)
-
 
 # msg = """
 # Hey, Team! Play with the settings for this prototype here. We can pick what 
