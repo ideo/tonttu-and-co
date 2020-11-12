@@ -1,4 +1,5 @@
 from copy import copy
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -142,8 +143,24 @@ def clustermap(pairwise_df, linkage_method, cmap):
 
     row_index = clustergrid.dendrogram_row.reordered_ind
     col_index = clustergrid.dendrogram_col.reordered_ind
-
     new_df = reorder_dataframe(pairwise_df, row_index, col_index)
+    
+    filepath = Path("src/connectedness/data/")
+    new_df.to_pickle(filepath / Path("clustered_df.pkl"))
+
+    fig, ax = plt.subplots()
+    ax = sns.heatmap(new_df, 
+        ax=ax,
+        cmap=cmap.lower().replace(" reverse", "_r")
+    )
+    ax.set_title("Explore the Natural Groupings in Your Team\n")
+    plt.yticks(rotation=0)
+    return fig, ax
+
+
+def load_clustermap(cmap):
+    filepath = Path("src/connectedness/data/")
+    new_df = pd.read_pickle(filepath / Path("clustered_df.pkl"))
 
     fig, ax = plt.subplots()
     ax = sns.heatmap(new_df, 

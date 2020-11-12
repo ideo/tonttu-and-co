@@ -6,7 +6,7 @@ import seaborn as sns
 
 from src.connectedness import load_saved_survey_results
 from src.connectedness import load_tsunagi_team_data, vega_grouped_bar_chart 
-from src.connectedness import clustermap, delta_plot
+from src.connectedness import clustermap, delta_plot, load_clustermap
 
 
 st.title("Tsunagi Connectedness Survey")
@@ -37,7 +37,7 @@ st.write(msg)
 # """
 # st.sidebar.write(msg)
 
-linkage_method = "single"
+# linkage_method = "single"
 # linkage_method = st.sidebar.selectbox(
 #     label="Select the sorting method used by the clustered heatmap",
 #     options=["single", "complete", "average", "ward"]
@@ -62,7 +62,8 @@ cmap = "Viridis Reverse"
 # """
 # st.sidebar.write(msg)
 
-fig, ax = clustermap(pairwise_zeros, linkage_method, cmap)
+# fig, ax = clustermap(pairwise_zeros, linkage_method, cmap)
+fig, ax = load_clustermap(cmap)
 st.pyplot(fig)
 
 st.header("Perceived Differences")
