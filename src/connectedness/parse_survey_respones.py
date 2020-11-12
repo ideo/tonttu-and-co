@@ -1,11 +1,20 @@
-from pathlib import Path
-import pprint
 import json
+import pickle
+import pprint
 from copy import copy
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
 import streamlit as st
+
+
+def load_saved_survey_results():
+    filepath = Path("src/connectedness/data/")
+    df_nan = pd.read_pickle(filepath / Path("WorkX_Connectedness_nan.pkl"))
+    df_zeros = pd.read_pickle(filepath / Path("WorkX_Connectedness_zeros.pkl"))
+    free_response = pd.read_pickle(filepath / Path("free_responses.pkl"))
+    return df_nan, df_zeros, free_response
 
 
 def load_mitsui_names_and_emails():
@@ -75,16 +84,15 @@ def parse_mitsui_survey_results():
     df.set_index("Name", inplace=True)
 
     # Fill diagonal
-    np.fill_diagonal(df.values, 0)
+    np.fill_diagonal(df.values, -1)
+    df_zeros = df.replace(-1, 0)
+    df_nan = df.replace(-1, np.nan)
 
     # save the parsed data
-    df.to_pickle(filepath / Path("WorkX_Connectedness.pkl"))
+    df_nan.to_pickle(filepath / Path("WorkX_Connectedness_nan.pkl"))
+    df_zeros.to_pickle(filepath / Path("WorkX_Connectedness_zeros.pkl"))
     free_response.to_pickle(filepath / Path("free_responses.pkl"))
     # return df, free_response
-
-
-def load_mitsui_survey_results():
-    pass
 
 
 # @st.cache

@@ -4,8 +4,9 @@ from streamlit_observable import observable
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-from src.connectedness import (load_tsunagi_team_data, vega_grouped_bar_chart, 
-    clustermap, delta_plot)
+from src.connectedness import load_saved_survey_results
+from src.connectedness import load_tsunagi_team_data, vega_grouped_bar_chart 
+from src.connectedness import clustermap, delta_plot
 
 
 st.title("Tsunagi Connectedness Survey")
@@ -18,44 +19,47 @@ First, here are the raw numbers from the survey.
 """
 st.write(msg)
 
-pairwise_nan, pairwise_zeros = load_tsunagi_team_data()
-st.table(pairwise_nan)
+# pairwise_nan, pairwise_zeros = load_tsunagi_team_data()
+pairwise_nan, pairwise_zeros, free_responses = load_saved_survey_results()
+st.dataframe(pairwise_nan)
 
 msg = """
 Below, explore the natural groups that have formed within your team. Darker 
-colors represent more closely connected people. **UPDATE**
+colors represent more closely connected people.
 """
 st.write(msg)
 
 
-msg = """
-Hey, Team! Play with the settings for this prototype here. We can pick what 
-we like and then disable this sidebar when we deliver it to WorkX.
-"""
-st.sidebar.write(msg)
+# msg = """
+# Hey, Team! Play with the settings for this prototype here. We can pick what 
+# we like and then disable this sidebar when we deliver it to WorkX.
+# """
+# st.sidebar.write(msg)
 
-linkage_method = st.sidebar.selectbox(
-    label="Select the sorting method used by the clustered heatmap",
-    options=["single", "complete", "average", "ward"]
-)
+linkage_method = "single"
+# linkage_method = st.sidebar.selectbox(
+#     label="Select the sorting method used by the clustered heatmap",
+#     options=["single", "complete", "average", "ward"]
+# )
 
-cmap = st.sidebar.selectbox(
-    label="Select the color scheme used by the clustered heatmap",
-    options=[
-        "Viridis Reverse", 
-        "Viridis",  
-        "Rocket Reverse",
-        "Rocket",  
-        "Magma Reverse",
-        "Magma",
-        ]
-)
+cmap = "Viridis Reverse"
+# cmap = st.sidebar.selectbox(
+#     label="Select the color scheme used by the clustered heatmap",
+#     options=[
+#         "Viridis Reverse", 
+#         "Viridis",  
+#         "Rocket Reverse",
+#         "Rocket",  
+#         "Magma Reverse",
+#         "Magma",
+#         ]
+# )
 
-msg = """
-Read more about color palettes 
-[here](https://seaborn.pydata.org/tutorial/color_palettes.html).
-"""
-st.sidebar.write(msg)
+# msg = """
+# Read more about color palettes 
+# [here](https://seaborn.pydata.org/tutorial/color_palettes.html).
+# """
+# st.sidebar.write(msg)
 
 fig, ax = clustermap(pairwise_zeros, linkage_method, cmap)
 st.pyplot(fig)
@@ -76,15 +80,11 @@ st.pyplot(fig)
 
 st.header("What does Connectedness mean to you?")
 msg = """
-The survey asked:
-> ここまでどのようなことをイメージして「つながり度合い」を決めましたか？皆さんにとって
-「つながり」を感じるときの定義はありますか？ (To you, what makes you feel 
-like you are strongly connected with someone?) 
-
-Here are those responses:
+The survey asked each person to describe what connectedness meant to them. 
+Here are those responses.
 """
 st.write(msg)
-# st.table(free_response_columns)
+st.table(free_responses.reset_index().drop(columns=["Email Address"]))
 
 
 threshold = 5
@@ -119,8 +119,8 @@ threshold = 5
 # st.write(msg)
 
 
-st.header("Explore the Connections Among Your Team")
-st.write("Coming Soon!")
+# st.header("Explore the Connections Among Your Team")
+# st.write("Coming Soon!")
 # observers = observable("Force Graph",
 #     notebook="@gambingo/force-directed-graph",
 #     targets=["chart"],

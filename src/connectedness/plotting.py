@@ -95,12 +95,14 @@ def vega_grouped_bar_chart(pairwise_df):
     yours["Direction"] = pd.Series(["Your Ratings of Others"]*yours.shape[0])
     others["Direction"] = pd.Series(["Others' Ratings of You"]*others.shape[0])
     vega_df = yours.append(others, ignore_index=True)
+
+    print(vega_df)
     
     spec = {
         "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
         "mark": "bar",
-        "mark": "bar",
         "encoding": {
+            "text": {"angle": -45},
             "column": {
                 "field": "Name", "type": "nominal", "spacing": 10,
                 "title": "Differences in Perceived Connectedness",
@@ -108,11 +110,12 @@ def vega_grouped_bar_chart(pairwise_df):
             "y": {
                 "aggregate": "sum", "field": "Rating",
                 "title": "Sum of All Ratings",
-                "axis": {"grid": False}
+                "axis": {"grid": False},
+                "text": {"angle": -45}
             },
             "x": {
                 "field": "Direction",
-                "axis": {"title": ""}
+                "axis": {"title": ""},
             },
             "color": {
                 "field": "Direction",
