@@ -10,6 +10,7 @@ the d3 visualizations are hosted.
 - [ ] ~~Use Ame's network diagram cause it's much prettier~~
 - [x] Basic Bar Charts in Vega
 - [x] Explore groupings and prompts programmatically
+- [ ] Add a Japanese/English Toggle for how the names are displayed.
 
 
 ### Brainstom Ideas

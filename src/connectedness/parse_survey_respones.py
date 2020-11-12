@@ -1,33 +1,37 @@
 from pathlib import Path
 import pprint
 import json
+from copy import copy
 
+import numpy as np
 import pandas as pd
 import streamlit as st
 
 
 def load_mitsui_names_and_emails():
-    # filepath = Path("src/connectedness/data/")
-    filepath = Path("../src/connectedness/data/")
+    filepath = Path("src/connectedness/data/")
+    # filepath = Path("../src/connectedness/data/")
     filename = Path("WorkX Member Names and Emails.csv")
     df = pd.read_csv(filepath / filename).set_index("Mail Address")
 
     df["Name (JP)"] = df["Family Name"] + df["First Name"]
     df["Name (EN)"] = df["Name (EN)"].apply(lambda n: n.replace(",", ", "))
     
-    name_to_email = df[["Name (EN)"]]
-    name_to_email["Name (EN)"] = name_to_email["Name (EN)"].apply(
+    emails = copy(df[["Name (EN)"]])
+    emails["Name (EN)"] = emails["Name (EN)"].apply(
         lambda n: n.replace(",", ""))
-    name_to_email.reset_index(inplace=True)
-    name_to_email.set_index("Name (EN)", inplace=True)
+    emails.reset_index(inplace=True)
+    emails["Mail Address"] = emails["Mail Address"].apply(lambda e: e.lower())
+    
+    emails.set_index("Name (EN)", inplace=True)
 
-    return df, name_to_email.to_dict(orient="index")
+    return df, emails
 
 
 def parse_mitsui_survey_results():
-    # filepath = Path("src/connectedness/data/")
-    filepath = Path("../src/connectedness/data/")
-    filename = Path("つなぎ – Connectedness Survey Results - 10-10-2020.csv")
+    filepath = Path("src/connectedness/data/")
+    # filepath = Path("../src/connectedness/data/")
+    filename = Path("つなぎ – Connectedness Survey Results - 10-12-2020.csv")
     
     columns_to_drop = [
         "Timestamp", 
@@ -36,6 +40,7 @@ def parse_mitsui_survey_results():
     ]
     
     df = pd.read_csv(filepath / filename).drop(columns=columns_to_drop)
+    df["Email Address"] = df["Email Address"].apply(lambda e: e.lower())
     df.set_index("Email Address", inplace=True)
     df.dropna(axis=1, how="all", inplace=True)
 
@@ -47,22 +52,39 @@ def parse_mitsui_survey_results():
             .replace(" last week?)", "") for col in df.columns},
             inplace=True)
 
-    _, names_to_emails = load_mitsui_names_and_emails()
+    _, emails = load_mitsui_names_and_emails()
+    names_to_emails = emails.to_dict(orient="index")
 
     df.rename(columns={
         name: names_to_emails[name]["Mail Address"] for name in df.columns
     }, inplace=True)
 
-    # for col in df.columns:
-    #     print(col)
-    
-    
-    # df["sort_by"] = df["What is your name?"].apply(lambda n: name_order[n])
-    # df.set_index("What is your name?", inplace=True)
-    # df.sort_values(axis=0, by="sort_by", inplace=True)
-    # df.drop(columns=["sort_by"], inplace=True)
-    # return df
-    return df, free_response
+    # Only return columns if those people filled out the survey
+    df = df[df.index.tolist()]
+
+    # replace with names in romaji
+    emails.reset_index(inplace=True)
+    emails.set_index("Mail Address", inplace=True)
+    email_to_name = emails.to_dict(orient="index")
+    email_to_name = {k:v["Name (EN)"] for k,v in email_to_name.items()}
+
+    df.reset_index(inplace=True)
+    df["Email Address"] = df["Email Address"].apply(lambda e: email_to_name[e])
+    df.rename(columns={"Email Address": "Name"}, inplace=True)
+    df.rename(columns=email_to_name, inplace=True)
+    df.set_index("Name", inplace=True)
+
+    # Fill diagonal
+    np.fill_diagonal(df.values, 0)
+
+    # save the parsed data
+    df.to_pickle(filepath / Path("WorkX_Connectedness.pkl"))
+    free_response.to_pickle(filepath / Path("free_responses.pkl"))
+    # return df, free_response
+
+
+def load_mitsui_survey_results():
+    pass
 
 
 # @st.cache
@@ -152,10 +174,4 @@ def make_graphcommons_csv(pairwise_df, min_link_strength=0):
 
 
 if __name__ == "__main__":
-    # df_nan, df_zeros = load_data()
-    # make_network_graph_json(df, min_link_strength=8)
-    # make_graphcommons_csv(df_nan)
-
-    # pp = pprint.PrettyPrinter(indent=4)
-    # pp.pprint(data)
     parse_mitsui_survey_results()
