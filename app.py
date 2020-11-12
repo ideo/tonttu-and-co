@@ -73,10 +73,10 @@ differing levels of overal connectedness and also mismatches between how
 people rated others and how others rated them.
 """
 st.write(msg)
-differences, vega_df, spec = vega_grouped_bar_chart(pairwise_nan)
+differences, vega_df, spec = vega_grouped_bar_chart(pairwise_zeros)
 st.vega_lite_chart(vega_df, spec)
 
-fig, ax = delta_plot(pairwise_nan)
+fig, ax = delta_plot(pairwise_zeros)
 st.pyplot(fig)
 
 

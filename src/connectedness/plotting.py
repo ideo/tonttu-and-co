@@ -104,7 +104,7 @@ def vega_grouped_bar_chart(pairwise_df):
         "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
         "mark": "bar",
         "encoding": {
-            "text": {"angle": -45},
+            # "text": {"angle": -45},
             "column": {
                 "field": "Name", "type": "nominal", "spacing": 10, "angle": -45,
                 "title": "Differences in Perceived Connectedness",
