@@ -96,6 +96,7 @@ def vega_grouped_bar_chart(pairwise_df):
     others["Direction"] = pd.Series(["Others' Ratings of You"]*others.shape[0])
     vega_df = yours.append(others, ignore_index=True)
 
+    vega_df["Name"] = vega_df["Name"].apply(lambda n: n.split(" ")[0])
     print(vega_df)
     
     spec = {
@@ -104,14 +105,13 @@ def vega_grouped_bar_chart(pairwise_df):
         "encoding": {
             "text": {"angle": -45},
             "column": {
-                "field": "Name", "type": "nominal", "spacing": 10,
+                "field": "Name", "type": "nominal", "spacing": 10, "angle": -45,
                 "title": "Differences in Perceived Connectedness",
             },
             "y": {
                 "aggregate": "sum", "field": "Rating",
                 "title": "Sum of All Ratings",
                 "axis": {"grid": False},
-                "text": {"angle": -45}
             },
             "x": {
                 "field": "Direction",
