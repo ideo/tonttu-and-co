@@ -9,6 +9,7 @@ import pandas as pd
 import streamlit as st
 
 
+@st.cache
 def load_saved_survey_results():
     filepath = Path("src/connectedness/data/")
     df_nan = pd.read_pickle(filepath / Path("WorkX_Connectedness_nan.pkl"))
