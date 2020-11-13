@@ -1,0 +1,25 @@
+From Type,From Name,Edge,To Type,To Name,Weight
+Person,Tawada Yoko,Rated,Person,Kitashiro Natsuki,6
+Person,Tawada Yoko,Rated,Person,Onogawa Takashi,6
+Person,Tawada Yoko,Rated,Person,Kuwabara Takashi,7
+Person,Minegishi Masayuki,Rated,Person,Kitashiro Natsuki,7
+Person,Minegishi Masayuki,Rated,Person,Kimura Yohei,7
+Person,Minegishi Masayuki,Rated,Person,Fujita Yuta,8
+Person,Minegishi Masayuki,Rated,Person,Onogawa Takashi,7
+Person,Minegishi Masayuki,Rated,Person,Katsuoka Daiki,8
+Person,Ishii Rio,Rated,Person,Kitashiro Natsuki,6
+Person,Ishii Rio,Rated,Person,Kimura Yohei,6
+Person,Ishii Rio,Rated,Person,Onogawa Takashi,6
+Person,Ishii Rio,Rated,Person,Katsuoka Daiki,7
+Person,Kitashiro Natsuki,Rated,Person,Fujita Yuta,7
+Person,Kitashiro Natsuki,Rated,Person,Onogawa Takashi,8
+Person,Kitashiro Natsuki,Rated,Person,Maekawa Tetsuya,7
+Person,Kimura Yohei,Rated,Person,Kuwabara Takashi,6
+Person,Fujita Yuta,Rated,Person,Onogawa Takashi,7
+Person,Fujita Yuta,Rated,Person,Katsuoka Daiki,6
+Person,Onogawa Takashi,Rated,Person,Katsuoka Daiki,6
+Person,Onogawa Takashi,Rated,Person,Hayashi Yosuke,7
+Person,Onogawa Takashi,Rated,Person,Kuwabara Takashi,7
+Person,Onogawa Takashi,Rated,Person,Chono Shintaro,7
+Person,Hayashi Kunihiko,Rated,Person,Hayashi Yosuke,9
+Person,Katsuoka Daiki,Rated,Person,Hayashi Yosuke,6
