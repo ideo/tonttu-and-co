@@ -23,6 +23,15 @@ st.write(msg)
 pairwise_nan, pairwise_zeros, free_responses = load_saved_survey_results()
 st.dataframe(pairwise_nan)
 
+st.header("What does Connectedness mean to you?")
+msg = """
+The survey asked each person to describe what connectedness meant to them. 
+Here are those responses.
+"""
+st.write(msg)
+# st.table(free_responses.reset_index().drop(columns=["Email Address"]))
+st.table(free_responses)
+
 
 st.header("Groups")
 msg = """
@@ -78,16 +87,6 @@ st.vega_lite_chart(vega_df, spec)
 
 fig, ax = delta_plot(pairwise_zeros)
 st.pyplot(fig)
-
-
-st.header("What does Connectedness mean to you?")
-msg = """
-The survey asked each person to describe what connectedness meant to them. 
-Here are those responses.
-"""
-st.write(msg)
-# st.table(free_responses.reset_index().drop(columns=["Email Address"]))
-st.table(free_responses)
 
 # threshold = 5
 # threshold = st.sidebar.slider("Threshold for Noticeable Difference", 
