@@ -161,6 +161,8 @@ def make_graphcommons_csv(pairwise_df, min_link_strength=0):
     ]
     node_data = []
 
+    columns = copy(df.columns.tolist())
+
     for ind in pairwise_df.index.tolist():
         node_data.append({
                     "Type":         "Person",
@@ -170,23 +172,32 @@ def make_graphcommons_csv(pairwise_df, min_link_strength=0):
                     "Reference":    "tktk",
                 })
 
-        for col in pairwise_df.columns:
+        for col in columns:
             if ind != col:
-                edge_data.append({
-                    "From Type":    "Person",
-                    "From Name":    ind,
-                    "Edge":         "Rated",
-                    "To Type":      "Person",
-                    "To Name":      col,
-                    "Weight":       int(pairwise_df.loc[ind][col]), #graphcommons rejects floats
-                })
+                weight = pairwise_df.loc[ind][col] + pairwise_df.loc[col][ind]
+                weight = weight/2
 
-    filepath = Path("src/connectedness/graphcommons")
+                if weight >= min_link_strength:
+                    edge_data.append({
+                        "From Type":    "Person",
+                        "From Name":    ind,
+                        "Edge":         "Rated",
+                        "To Type":      "Person",
+                        "To Name":      col,
+                        "Weight":       int(weight), #graphcommons rejects floats
+                    })
+
+        columns.remove(ind)
+
+    filepath = Path("src/connectedness/data/graphcommons")
     graphcommons_edges = pd.DataFrame(edge_data, columns=edge_columns)
-    graphcommons_edges.to_csv(filepath / Path("graphcommons_edges.csv"), index=False)
+    graphcommons_edges.to_csv(filepath / Path(f"graphcommons_edges_{min_link_strength}.csv"), index=False)
     graphcommons_nodes = pd.DataFrame(node_data, columns=node_columns)
     graphcommons_nodes.to_csv(filepath / Path("graphcommons_nodes.csv"), index=False)
 
 
 if __name__ == "__main__":
-    parse_mitsui_survey_results()
+    _, df, _ = load_saved_survey_results()
+    make_graphcommons_csv(df, min_link_strength=4)
+    make_graphcommons_csv(df, min_link_strength=6)
+    make_graphcommons_csv(df, min_link_strength=8)

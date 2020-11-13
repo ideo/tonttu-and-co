@@ -120,11 +120,11 @@ st.pyplot(fig)
 # st.write(msg)
 
 
-# st.header("Explore the Connections Among Your Team")
-# st.write("Coming Soon!")
-# observers = observable("Force Graph",
-#     notebook="@gambingo/force-directed-graph",
-#     targets=["chart"],
-#     observe=["data", "chart"])
-
-# force_graph = observers.get("data")
+st.header("Explore the Connections Among Your Team")
+msg = """
+This graph is based on the average ratings between two people. To keep the 
+graph readable, we've only inluded mutual connections that averaged to a score 
+of at least 6.
+"""
+st.write(msg)
+st.image("src/connectedness/data/graphcommons/network_graph_6.png")
