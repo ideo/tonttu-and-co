@@ -35,8 +35,9 @@ st.table(free_responses)
 
 st.header("Groups")
 msg = """
-Below, explore the natural groups that have formed within your team. Darker 
-colors represent more closely connected people.
+Below is an attempt explore the natural groups that form within your team. 
+Darker colors represent more closely connected people. Your team may be too 
+interconneted for clear groups to be visible.
 """
 st.write(msg)
 
@@ -46,11 +47,11 @@ st.write(msg)
 # """
 # st.sidebar.write(msg)
 
-# linkage_method = "single"
-linkage_method = st.sidebar.selectbox(
-    label="Select the sorting method used by the clustered heatmap",
-    options=["single", "complete", "average", "ward"]
-)
+linkage_method = "single"
+# linkage_method = st.sidebar.selectbox(
+#     label="Select the sorting method used by the clustered heatmap",
+#     options=["single", "complete", "average", "ward"]
+# )
 
 cmap = "Viridis Reverse"
 # cmap = st.sidebar.selectbox(
@@ -71,7 +72,7 @@ cmap = "Viridis Reverse"
 # """
 # st.sidebar.write(msg)
 
-fig, ax = clustermap(pairwise_zeros, linkage_method, cmap)
+# fig, ax = clustermap(pairwise_zeros, linkage_method, cmap)
 fig, ax = load_clustermap(cmap)
 st.pyplot(fig)
 
@@ -123,8 +124,8 @@ st.pyplot(fig)
 st.header("Explore the Connections Among Your Team")
 msg = """
 This graph is based on the average ratings between two people. To keep the 
-graph readable, we've only inluded mutual connections that averaged to a score 
-of at least 6.
+graph readable, we've only inluded mutual connections that averaged to a *score 
+of at least 6*.
 """
 st.write(msg)
 st.image("src/connectedness/data/graphcommons/moon_network_graph_6.png")
