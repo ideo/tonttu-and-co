@@ -23,6 +23,13 @@ st.write(msg)
 pairwise_nan, pairwise_zeros, free_responses = load_saved_survey_results()
 st.dataframe(pairwise_nan)
 
+
+fig, ax = plt.subplots()
+sns.heatmap(pairwise_zeros, cmap="viridis_r")
+ax.set_ylabel("")
+st.pyplot(fig)
+
+
 st.header("What does Connectedness mean to you?")
 msg = """
 The survey asked each person to describe what connectedness meant to them. 
