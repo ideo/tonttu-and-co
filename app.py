@@ -33,13 +33,31 @@ st.write(msg)
 st.table(free_responses)
 
 
-st.header("Groups")
+st.header("Explore the Connections Among Your Team")
 msg = """
-Below is an attempt explore the natural groups that form within your team. 
-Darker colors represent more closely connected people. Your team may be too 
-interconneted for clear groups to be visible.
+This graph is based on the average ratings between two people. To keep the 
+graph readable, we've only inluded mutual connections that averaged to a *score 
+of at least 6*.
 """
 st.write(msg)
+st.image("src/connectedness/data/graphcommons/moon_network_graph_6.png")
+
+msg = """
+Perhaps this network is more clear if we only visualize strong connnections. 
+This network only inludes mutual connections that averaged to a *score 
+of at least 8*.
+"""
+st.write(msg)
+st.image("src/connectedness/data/graphcommons/moon_network_graph_8.png")
+
+
+# st.header("Groups")
+# msg = """
+# Below is an attempt explore the natural groups that form within your team. 
+# Darker colors represent more closely connected people. Your team may be too 
+# interconneted for clear groups to be visible.
+# """
+# st.write(msg)
 
 # msg = """
 # Hey, Team! Play with the settings for this prototype here. We can pick what 
@@ -47,13 +65,13 @@ st.write(msg)
 # """
 # st.sidebar.write(msg)
 
-linkage_method = "single"
+# linkage_method = "single"
 # linkage_method = st.sidebar.selectbox(
 #     label="Select the sorting method used by the clustered heatmap",
 #     options=["single", "complete", "average", "ward"]
 # )
 
-cmap = "Viridis Reverse"
+# cmap = "Viridis Reverse"
 # cmap = st.sidebar.selectbox(
 #     label="Select the color scheme used by the clustered heatmap",
 #     options=[
@@ -73,8 +91,8 @@ cmap = "Viridis Reverse"
 # st.sidebar.write(msg)
 
 # fig, ax = clustermap(pairwise_zeros, linkage_method, cmap)
-fig, ax = load_clustermap(cmap)
-st.pyplot(fig)
+# fig, ax = load_clustermap(cmap)
+# st.pyplot(fig)
 
 st.header("Perceived Differences")
 msg = """
@@ -119,21 +137,3 @@ st.pyplot(fig)
 #     """
 
 # st.write(msg)
-
-
-st.header("Explore the Connections Among Your Team")
-msg = """
-This graph is based on the average ratings between two people. To keep the 
-graph readable, we've only inluded mutual connections that averaged to a *score 
-of at least 6*.
-"""
-st.write(msg)
-st.image("src/connectedness/data/graphcommons/moon_network_graph_6.png")
-
-msg = """
-Perhaps this network is more clear if we only visualize strong connnections. 
-This network only inludes mutual connections that averaged to a *score 
-of at least 8*.
-"""
-st.write(msg)
-st.image("src/connectedness/data/graphcommons/moon_network_graph_8.png")

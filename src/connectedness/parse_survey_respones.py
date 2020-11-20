@@ -15,7 +15,6 @@ def load_saved_survey_results():
     df_nan = pd.read_pickle(filepath / Path("Moon_Connectedness_nan.pkl"))
     df_zeros = pd.read_pickle(filepath / Path("Moon_Connectedness_zeros.pkl"))
     free_response = pd.read_pickle(filepath / Path("Moon_free_responses.pkl"))
-    print(free_response)
     return df_nan, df_zeros, free_response
 
 
