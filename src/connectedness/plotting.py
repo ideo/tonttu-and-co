@@ -60,7 +60,7 @@ def delta_plot(pairwise_df):
     df = your_connectedness.join(connections_to_you)
     df["Delta"] = df["Your Perception"] - df["Others' Perception"]
 
-    print(df)
+    df.sort_values(by="Delta", inplace=True)
 
     # Plot
     fig, ax = plt.subplots()
