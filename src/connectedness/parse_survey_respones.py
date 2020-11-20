@@ -12,9 +12,10 @@ import streamlit as st
 @st.cache
 def load_saved_survey_results():
     filepath = Path("src/connectedness/data/")
-    df_nan = pd.read_pickle(filepath / Path("WorkX_Connectedness_nan.pkl"))
-    df_zeros = pd.read_pickle(filepath / Path("WorkX_Connectedness_zeros.pkl"))
-    free_response = pd.read_pickle(filepath / Path("free_responses.pkl"))
+    df_nan = pd.read_pickle(filepath / Path("Moon_Connectedness_nan.pkl"))
+    df_zeros = pd.read_pickle(filepath / Path("Moon_Connectedness_zeros.pkl"))
+    free_response = pd.read_pickle(filepath / Path("Moon_free_responses.pkl"))
+    print(free_response)
     return df_nan, df_zeros, free_response
 
 
@@ -36,6 +37,79 @@ def load_mitsui_names_and_emails():
     emails.set_index("Name (EN)", inplace=True)
 
     return df, emails
+
+
+def load_moon_names_and_emails():
+    filepath = Path("src/connectedness/data/")
+    # filepath = Path("../src/connectedness/data/")
+    filename = Path("Moon Member Names and Emails.csv")
+    df = pd.read_csv(filepath / filename).set_index("Email")
+
+    # df["Name (JP)"] = df["Family Name"] + df["First Name"]
+    # df["Name (EN)"] = df["Name (EN)"].apply(lambda n: n.replace(",", ", "))
+    
+    # emails = copy(df[["Name"]])
+    # emails["Name"] = emails["Name"].apply(
+    #     lambda n: n.replace(",", ""))
+    # emails.reset_index(inplace=True)
+    # emails["Email"] = emails["Email"].apply(lambda e: e.lower())
+    
+    # emails.set_index("Name", inplace=True)
+
+    # return df, emails
+    email_to_names = df.to_dict(orient="index")
+    names_to_emails = df.set_index("Name").to_dict(orient="index")
+    return email_to_names, names_to_emails
+
+
+def parse_moon_survey_results():
+    filepath = Path("src/connectedness/data/")
+    filename = Path("Tsunagi Survey for Moon Lab Responses.csv")
+
+    columns_to_drop = ["Timestamp"]
+    df = pd.read_csv(filepath / filename).drop(columns=columns_to_drop)
+    df["Email Address"] = df["Email Address"].apply(lambda e: e.lower())
+    df.set_index("Email Address", inplace=True)
+    # df.dropna(axis=1, how="all", inplace=True)
+
+    # What does connectedness mean to you?
+    free_rsp_col = [col for col in df.columns if "what makes you fe" in col][0]
+    free_response = df[[free_rsp_col]]
+    df.drop(columns=[free_rsp_col], inplace=True)
+
+    # Rename columns from long questions to just names.
+    df.rename(columns={col: col.split("feel with ")[1] \
+            .replace("?", "").strip() for col in df.columns},
+            inplace=True)
+
+    email_to_name, _ = load_moon_names_and_emails()
+    # Everyone filled out the survey. No need to check.
+
+    # Change index from email to names
+    df.reset_index(inplace=True)
+    df["Name"] = df["Email Address"].apply(lambda e: email_to_name[e]["Name"])
+    df.set_index("Name", inplace=True)
+    df.drop(columns=["Email Address"], inplace=True)
+
+    free_response.reset_index(inplace=True)
+    free_response["Name"] = free_response["Email Address"].apply(lambda e: email_to_name[e]["Name"])
+    free_response.set_index("Name", inplace=True)
+    free_response.drop(columns=["Email Address"], inplace=True)
+    print(free_response)
+   
+    # Make it triangular
+    df = df[df.index.tolist()]
+    
+    # Fill diagonal
+    np.fill_diagonal(df.values, -1)
+    df_zeros = df.replace(-1, 0)
+    df_nan = df.replace(-1, np.nan)
+
+    # save the parsed data
+    df_nan.to_pickle(filepath / Path("Moon_Connectedness_nan.pkl"))
+    df_zeros.to_pickle(filepath / Path("Moon_Connectedness_zeros.pkl"))
+    free_response.to_pickle(filepath / Path("Moon_free_responses.pkl"))
+    # return df, free_response
 
 
 def parse_mitsui_survey_results():
@@ -98,7 +172,7 @@ def parse_mitsui_survey_results():
     # save the parsed data
     df_nan.to_pickle(filepath / Path("WorkX_Connectedness_nan.pkl"))
     df_zeros.to_pickle(filepath / Path("WorkX_Connectedness_zeros.pkl"))
-    free_response.to_pickle(filepath / Path("free_responses.pkl"))
+    free_response.to_pickle(filepath / Path("WorkX_free_responses.pkl"))
     # return df, free_response
 
 
@@ -191,12 +265,13 @@ def make_graphcommons_csv(pairwise_df, min_link_strength=0):
 
     filepath = Path("src/connectedness/data/graphcommons")
     graphcommons_edges = pd.DataFrame(edge_data, columns=edge_columns)
-    graphcommons_edges.to_csv(filepath / Path(f"graphcommons_edges_{min_link_strength}.csv"), index=False)
+    graphcommons_edges.to_csv(filepath / Path(f"graphcommons_moon_edges_{min_link_strength}.csv"), index=False)
     graphcommons_nodes = pd.DataFrame(node_data, columns=node_columns)
-    graphcommons_nodes.to_csv(filepath / Path("graphcommons_nodes.csv"), index=False)
+    graphcommons_nodes.to_csv(filepath / Path("graphcommons_moon_nodes.csv"), index=False)
 
 
 if __name__ == "__main__":
+    # parse_moon_survey_results()
     _, df, _ = load_saved_survey_results()
     make_graphcommons_csv(df, min_link_strength=4)
     make_graphcommons_csv(df, min_link_strength=6)

@@ -47,10 +47,10 @@ st.write(msg)
 # st.sidebar.write(msg)
 
 # linkage_method = "single"
-# linkage_method = st.sidebar.selectbox(
-#     label="Select the sorting method used by the clustered heatmap",
-#     options=["single", "complete", "average", "ward"]
-# )
+linkage_method = st.sidebar.selectbox(
+    label="Select the sorting method used by the clustered heatmap",
+    options=["single", "complete", "average", "ward"]
+)
 
 cmap = "Viridis Reverse"
 # cmap = st.sidebar.selectbox(
@@ -71,7 +71,7 @@ cmap = "Viridis Reverse"
 # """
 # st.sidebar.write(msg)
 
-# fig, ax = clustermap(pairwise_zeros, linkage_method, cmap)
+fig, ax = clustermap(pairwise_zeros, linkage_method, cmap)
 fig, ax = load_clustermap(cmap)
 st.pyplot(fig)
 
@@ -127,4 +127,4 @@ graph readable, we've only inluded mutual connections that averaged to a score
 of at least 6.
 """
 st.write(msg)
-st.image("src/connectedness/data/graphcommons/network_graph_6.png")
+st.image("src/connectedness/data/graphcommons/moon_network_graph_6.png")
