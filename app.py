@@ -129,3 +129,11 @@ of at least 6*.
 """
 st.write(msg)
 st.image("src/connectedness/data/graphcommons/moon_network_graph_6.png")
+
+msg = """
+Perhaps this network is more clear if we only visualize strong connnections. 
+This network only inludes mutual connections that averaged to a *score 
+of at least 8*.
+"""
+st.write(msg)
+st.image("src/connectedness/data/graphcommons/moon_network_graph_8.png")
