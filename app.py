@@ -26,7 +26,8 @@ st.dataframe(pairwise_nan)
 
 fig, ax = plt.subplots()
 sns.heatmap(pairwise_zeros, cmap="viridis_r")
-ax.set_ylabel("")
+ax.set_ylabel("Ratings given by\n")
+ax.set_xlabel("\nRatings given to")
 st.pyplot(fig)
 
 
