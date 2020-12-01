@@ -7,6 +7,7 @@ import seaborn as sns
 from src.connectedness import load_saved_survey_results
 from src.connectedness import load_tsunagi_team_data, vega_grouped_bar_chart 
 from src.connectedness import clustermap, delta_plot, load_clustermap
+from src.connectedness import vega_grouped_bar_chart_comparison
 
 
 st.title("Tsunagi Connectedness Survey: Round 2!")
@@ -70,15 +71,22 @@ differing levels of overal connectedness and also mismatches between how
 people rated others and how others rated them.
 """
 st.write(msg)
-differences, vega_df, spec = vega_grouped_bar_chart(dfA_zeros, question="Question A")
-st.vega_lite_chart(vega_df, spec)
-fig, ax = delta_plot(dfA_zeros, question="Question A")
-st.pyplot(fig)
 
-differences, vega_df, spec = vega_grouped_bar_chart(dfA_zeros, question="Question B")
+differences, vega_df, spec = vega_grouped_bar_chart_comparison(df1_zeros, dfA_zeros, question="Question A")
 st.vega_lite_chart(vega_df, spec)
-fig, ax = delta_plot(dfA_zeros, question="Question B")
-st.pyplot(fig)
+
+# differences, vega_df, spec = vega_grouped_bar_chart(dfA_zeros, question="Question A")
+# st.vega_lite_chart(vega_df, spec)
+# fig, ax = delta_plot(dfA_zeros, question="Question A")
+# st.pyplot(fig)
+
+# differences, vega_df, spec = vega_grouped_bar_chart(dfA_zeros, question="Question B")
+# st.vega_lite_chart(vega_df, spec)
+# fig, ax = delta_plot(dfA_zeros, question="Question B")
+# st.pyplot(fig)
+
+
+
 
 
 

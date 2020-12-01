@@ -141,6 +141,97 @@ def vega_grouped_bar_chart(pairwise_df, question=None):
     return useful_df, vega_df, spec
 
 
+def vega_grouped_bar_chart_comparison(df1, df2, question=None):
+    # Round 1
+    your_connectedness1 = pd.DataFrame(df1.sum(axis=1))
+    connections_to_you1 = pd.DataFrame(df1.sum(axis=0))
+
+    your_connectedness1.rename(columns={0: "Rating"}, inplace=True)
+    connections_to_you1.rename(columns={0: "Rating"}, inplace=True)
+
+    your_connectedness1.index = [f"{n} (Round 1)" for n in your_connectedness1.index]
+    connections_to_you1.index = [f"{n} (Round 1)" for n in connections_to_you1.index]
+
+    yours1 = your_connectedness1.reset_index().rename(columns={"": "Name"})
+    others1 = connections_to_you1.reset_index().rename(columns={"index": "Name"})
+
+    # Round 2
+    your_connectedness2 = pd.DataFrame(df2.sum(axis=1))
+    connections_to_you2 = pd.DataFrame(df2.sum(axis=0))
+
+    your_connectedness2.rename(columns={0: "Rating"}, inplace=True)
+    connections_to_you2.rename(columns={0: "Rating"}, inplace=True)
+
+    your_connectedness2.index = [f"{n} (Round 2)" for n in your_connectedness2.index]
+    connections_to_you2.index = [f"{n} (Round 2)" for n in connections_to_you2.index]
+
+    yours2 = your_connectedness2.reset_index().rename(columns={"": "Name"})
+    others2 = connections_to_you2.reset_index().rename(columns={"index": "Name"})
+
+    # print(yours1)
+    # print(yours2)
+
+    yours = yours1.append(yours2)
+    others = others1.append(others2)
+
+    yours.rename(columns={"index": "Name"}, inplace=True)
+
+    # print(yours)
+    # print(others)
+
+    useful_df = yours.rename(columns={"Rating": "Your Perception"}).set_index("Name").join(
+        others.rename(columns={"Rating": "Others' Perception"}).set_index("Name")
+    )
+    # useful_df["Difference"] = useful_df["Your Perception"] - useful_df["Others' Perception"]
+
+    print("useful_df")
+    print(useful_df)
+
+    yours["Direction"] = pd.Series(["Your Ratings of Others"]*yours.shape[0])
+    others["Direction"] = pd.Series(["Others' Ratings of You"]*others.shape[0])
+    vega_df = yours.append(others, ignore_index=True)
+
+    vega_df["Name"] = vega_df["Name"].apply(lambda n: f"{n.split(' ')[0]} {n.split(' ')[-1][-2]}")
+    print(vega_df)
+    print("vega_df")
+
+    ttl = "Differences in Perceived Connectedness"
+    if question:
+        ttl = f"{question}: {ttl}"
+    
+    spec = {
+        "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+        "mark": "bar",
+        "encoding": {
+            # "text": {"angle": -45},
+            "column": {
+                "field": "Name", "type": "nominal", "spacing": 10, "angle": -45,
+                "title": ttl,
+            },
+            "y": {
+                "aggregate": "sum", "field": "Rating",
+                "title": "Sum of All Ratings",
+                "axis": {"grid": False},
+            },
+            "x": {
+                "field": "Direction",
+                "axis": {"title": ""},
+            },
+            "color": {
+                "field": "Direction",
+                "scale": {"range": ["#675193", "#ca8861"]}
+            }
+        },
+        "config": {
+            "view": {"stroke": "transparent"},
+            "axis": {"domainWidth": 1},
+        }
+    }
+
+    return useful_df, vega_df, spec
+
+
+
 # Do not cache this function. Seems to crash streamlit
 def clustermap(pairwise_df, linkage_method, cmap):
     # fig, ax = plt.subplots()    
