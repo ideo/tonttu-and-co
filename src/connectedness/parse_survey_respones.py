@@ -18,7 +18,7 @@ def load_saved_survey_results():
 
     df1_nan = pd.read_pickle(filepath / Path("WorkX_Connectedness_nan.pkl"))
     df1_zeros = pd.read_pickle(filepath / Path("WorkX_Connectedness_zeros.pkl"))
-    free_response1 = pd.read_pickle(filepath / Path("WorkX_free_responses.pkl"))
+    free_response1 = pd.read_pickle(filepath / Path("WorkX_free_responses_round1.pkl"))
 
     dfA_nan = pd.read_pickle(filepath / Path("A_WorkX_Connectedness_nan.pkl"))
     dfA_zeros = pd.read_pickle(filepath / Path("A_WorkX_Connectedness_zeros.pkl"))
@@ -168,8 +168,9 @@ def parse_second_mitsui_survey_results():
         "先週1週間を振り返り、伊吹 立さんが感じている業務上の課題をどれくらい把握できていると感じますか？（How much do you think you acknowledge the issues around their job in the last week?）": "Question B: Ibuki Ryu",
         "眺野 真太郎さん：11月17日(オフサイト実施日)から今日までを振り返って、あなたとのつながり度合いはどれくらいですか。前回のあなたの定義をもとに答えてください。 (How close was your connection since the offsite?...Chono-san)": "Question A: Chono Shintaro",
         "先週1週間を振り返り、眺野 真太郎さんが感じている業務上の課題をどれくらい把握できていると感じますか？（How much do you think you acknowledge the issues around their job in the last week?）": "Question B: Chono Shintaro",
-        "第1回目と2回目で、「つながり合い」に変化があった場合、何がきっかけでしたか？": "Free Response",
     }
+
+    # "第1回目と2回目で、「つながり合い」に変化があった場合、何がきっかけでしたか？": "Free Response",
 
     df = pd.read_csv(filepath / filename)
     df.rename(columns=renames, inplace=True)
@@ -182,7 +183,7 @@ def parse_second_mitsui_survey_results():
 
     dfA = df[A_columns]
     dfB = df[B_columns]
-    free_response = df[["Free Response"]]
+    free_response = df[["第1回目と2回目で、「つながり合い」に変化があった場合、何がきっかけでしたか？"]]
 
     dfA.rename(columns={col: col.replace("Question A: ", "") for col in dfA.columns}, inplace=True)
     dfB.rename(columns={col: col.replace("Question B: ", "") for col in dfB.columns}, inplace=True)
@@ -301,7 +302,7 @@ def parse_mitsui_survey_results():
     # save the parsed data
     df_nan.to_pickle(filepath / Path("WorkX_Connectedness_nan.pkl"))
     df_zeros.to_pickle(filepath / Path("WorkX_Connectedness_zeros.pkl"))
-    free_response.to_pickle(filepath / Path("WorkX_free_responses.pkl"))
+    free_response.to_pickle(filepath / Path("WorkX_free_responses_round1.pkl"))
     # return df, free_response
 
 

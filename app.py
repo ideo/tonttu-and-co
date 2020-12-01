@@ -57,11 +57,12 @@ st.pyplot(fig)
 st.header("What does Connectedness mean to you?")
 msg = """
 The survey asked each person to describe what connectedness meant to them. 
-Here are those responses.
+Here are those responses from each round.
 """
 st.write(msg)
 # st.table(free_responses.reset_index().drop(columns=["Email Address"]))
-st.table(free_responses)
+# st.table(free_response2)
+st.table(free_response1.join(free_response2))
 
 
 st.header("Explore the Connections Among Your Team")
