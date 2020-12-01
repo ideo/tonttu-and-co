@@ -195,6 +195,9 @@ def vega_grouped_bar_chart_comparison(df1, df2, question=None):
     print(vega_df)
     print("vega_df")
 
+    vega_df = vega_df[~vega_df["Name"].isin(["Imai 1", "Katsuoka 1"])]
+
+
     ttl = "Differences in Perceived Connectedness"
     if question:
         ttl = f"{question}: {ttl}"

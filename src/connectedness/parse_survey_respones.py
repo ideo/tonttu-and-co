@@ -345,7 +345,7 @@ def make_network_graph_json(pairwise_df, min_link_strength=0):
     # return data
 
 
-def make_graphcommons_csv(pairwise_df, min_link_strength=0):
+def make_graphcommons_csv(pairwise_df, question, min_link_strength=0):
     edge_columns = [
         "From Type",
         "From Name",
@@ -365,7 +365,7 @@ def make_graphcommons_csv(pairwise_df, min_link_strength=0):
     ]
     node_data = []
 
-    columns = copy(df.columns.tolist())
+    columns = copy(pairwise_df.columns.tolist())
 
     for ind in pairwise_df.index.tolist():
         node_data.append({
@@ -395,15 +395,19 @@ def make_graphcommons_csv(pairwise_df, min_link_strength=0):
 
     filepath = Path("src/connectedness/data/graphcommons")
     graphcommons_edges = pd.DataFrame(edge_data, columns=edge_columns)
-    graphcommons_edges.to_csv(filepath / Path(f"graphcommons_moon_edges_{min_link_strength}.csv"), index=False)
+    graphcommons_edges.to_csv(filepath / Path(f"graphcommons_workX_round2_{question}_edges_{min_link_strength}.csv"), index=False)
     graphcommons_nodes = pd.DataFrame(node_data, columns=node_columns)
-    graphcommons_nodes.to_csv(filepath / Path("graphcommons_moon_nodes.csv"), index=False)
+    graphcommons_nodes.to_csv(filepath / Path(f"graphcommons_workX_round2_{question}_nodes.csv"), index=False)
 
 
 if __name__ == "__main__":
-    parse_mitsui_survey_results()
-    parse_second_mitsui_survey_results()
-    # _, df, _ = load_saved_survey_results()
-    # make_graphcommons_csv(df, min_link_strength=4)
-    # make_graphcommons_csv(df, min_link_strength=6)
-    # make_graphcommons_csv(df, min_link_strength=8)
+    # parse_mitsui_survey_results()
+    # parse_second_mitsui_survey_results()
+    _, _, _, _, dfA_zeros, _, dfB_zeros, _ = load_saved_survey_results()
+    make_graphcommons_csv(dfA_zeros, "A", min_link_strength=4)
+    make_graphcommons_csv(dfA_zeros, "A", min_link_strength=6)
+    make_graphcommons_csv(dfA_zeros, "A", min_link_strength=8)
+
+    make_graphcommons_csv(dfB_zeros, "B", min_link_strength=4)
+    make_graphcommons_csv(dfB_zeros, "B", min_link_strength=6)
+    make_graphcommons_csv(dfB_zeros, "B", min_link_strength=8)

@@ -72,7 +72,7 @@ people rated others and how others rated them.
 """
 st.write(msg)
 
-differences, vega_df, spec = vega_grouped_bar_chart_comparison(df1_zeros, dfA_zeros, question="Question A")
+differences, vega_df, spec = vega_grouped_bar_chart_comparison(df1_zeros, dfA_zeros, question="Question A, Comparison to Previous Survey")
 st.vega_lite_chart(vega_df, spec)
 
 # differences, vega_df, spec = vega_grouped_bar_chart(dfA_zeros, question="Question A")
@@ -80,8 +80,8 @@ st.vega_lite_chart(vega_df, spec)
 # fig, ax = delta_plot(dfA_zeros, question="Question A")
 # st.pyplot(fig)
 
-# differences, vega_df, spec = vega_grouped_bar_chart(dfA_zeros, question="Question B")
-# st.vega_lite_chart(vega_df, spec)
+differences, vega_df, spec = vega_grouped_bar_chart(dfA_zeros, question="Question B")
+st.vega_lite_chart(vega_df, spec)
 # fig, ax = delta_plot(dfA_zeros, question="Question B")
 # st.pyplot(fig)
 
@@ -90,14 +90,14 @@ st.vega_lite_chart(vega_df, spec)
 
 
 
-# st.header("Explore the Connections Among Your Team")
-# msg = """
-# This graph is based on the average ratings between two people. To keep the 
-# graph readable, we've only inluded mutual connections that averaged to a *score 
-# of at least 6*.
+st.header("Explore the Connections Among Your Team")
+msg = """
+This graph is based on the average ratings between two people. To keep the 
+graph readable, we've only inluded mutual connections that averaged to a *score 
+of at least 6*.
 # """
-# st.write(msg)
-# st.image("src/connectedness/data/graphcommons/moon_network_graph_6.png")
+st.write(msg)
+st.image("src/connectedness/data/graphcommons/workX_questionA_network_graph_6.png")
 
 # msg = """
 # Perhaps this network is more clear if we only visualize strong connnections. 
