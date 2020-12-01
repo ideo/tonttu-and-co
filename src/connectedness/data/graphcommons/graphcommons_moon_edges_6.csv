@@ -1,0 +1,22 @@
+From Type,From Name,Edge,To Type,To Name,Weight
+Person,Anke Pierik,Rated,Person,Mary Ann Gallo,7
+Person,Anke Pierik,Rated,Person,Peter Antonelli,9
+Person,Anke Pierik,Rated,Person,Michelle McCune,6
+Person,Anke Pierik,Rated,Person,Jeremy Clark,7
+Person,Anke Pierik,Rated,Person,Michael Peng,9
+Person,Mary Ann Gallo,Rated,Person,Peter Antonelli,6
+Person,Mary Ann Gallo,Rated,Person,Michelle McCune,7
+Person,Mary Ann Gallo,Rated,Person,Jeremy Clark,7
+Person,Mary Ann Gallo,Rated,Person,Takashi Ishikawa,7
+Person,Mary Ann Gallo,Rated,Person,Michael Peng,9
+Person,Peter Antonelli,Rated,Person,Michelle McCune,6
+Person,Peter Antonelli,Rated,Person,Jeremy Clark,6
+Person,Peter Antonelli,Rated,Person,Michael Peng,9
+Person,Michelle McCune,Rated,Person,Jeremy Clark,7
+Person,Michelle McCune,Rated,Person,Takashi Ishikawa,8
+Person,Michelle McCune,Rated,Person,Michael Peng,8
+Person,Kaichi Yokoyama,Rated,Person,Takashi Ishikawa,6
+Person,Kaichi Yokoyama,Rated,Person,Michael Peng,6
+Person,Jeremy Clark,Rated,Person,Takashi Ishikawa,8
+Person,Jeremy Clark,Rated,Person,Michael Peng,8
+Person,Takashi Ishikawa,Rated,Person,Michael Peng,7

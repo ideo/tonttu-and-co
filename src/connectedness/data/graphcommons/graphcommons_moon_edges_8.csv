@@ -1,0 +1,9 @@
+From Type,From Name,Edge,To Type,To Name,Weight
+Person,Anke Pierik,Rated,Person,Peter Antonelli,9
+Person,Anke Pierik,Rated,Person,Michael Peng,9
+Person,Mary Ann Gallo,Rated,Person,Michael Peng,9
+Person,Peter Antonelli,Rated,Person,Michael Peng,9
+Person,Michelle McCune,Rated,Person,Takashi Ishikawa,8
+Person,Michelle McCune,Rated,Person,Michael Peng,8
+Person,Jeremy Clark,Rated,Person,Takashi Ishikawa,8
+Person,Jeremy Clark,Rated,Person,Michael Peng,8
