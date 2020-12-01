@@ -102,8 +102,8 @@ def vega_grouped_bar_chart(pairwise_df, question=None):
     others["Direction"] = pd.Series(["Others' Ratings of You"]*others.shape[0])
     vega_df = yours.append(others, ignore_index=True)
 
-    vega_df["Name"] = vega_df["Name"].apply(lambda n: n.split(" ")[-1])
-    # print(vega_df)
+    vega_df["Name"] = vega_df["Name"].apply(lambda n: n.split(" ")[0])
+    print(vega_df)
 
     ttl = "Differences in Perceived Connectedness"
     if question:
@@ -184,16 +184,16 @@ def vega_grouped_bar_chart_comparison(df1, df2, question=None):
     )
     # useful_df["Difference"] = useful_df["Your Perception"] - useful_df["Others' Perception"]
 
-    print("useful_df")
-    print(useful_df)
+    # print("useful_df")
+    # print(useful_df)
 
     yours["Direction"] = pd.Series(["Your Ratings of Others"]*yours.shape[0])
     others["Direction"] = pd.Series(["Others' Ratings of You"]*others.shape[0])
     vega_df = yours.append(others, ignore_index=True)
 
     vega_df["Name"] = vega_df["Name"].apply(lambda n: f"{n.split(' ')[0]} {n.split(' ')[-1][-2]}")
-    print(vega_df)
-    print("vega_df")
+    # print(vega_df)
+    # print("vega_df")
 
     vega_df = vega_df[~vega_df["Name"].isin(["Imai 1", "Katsuoka 1"])]
 
