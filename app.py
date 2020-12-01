@@ -52,8 +52,6 @@ ax.set_xlabel("\nRatings given to")
 st.pyplot(fig)
 
 
-
-
 st.header("What does Connectedness mean to you?")
 msg = """
 The survey asked each person to describe what connectedness meant to them. 
@@ -65,22 +63,41 @@ st.write(msg)
 st.table(free_response1.join(free_response2))
 
 
-st.header("Explore the Connections Among Your Team")
+st.header("Perceived Differences")
 msg = """
-This graph is based on the average ratings between two people. To keep the 
-graph readable, we've only inluded mutual connections that averaged to a *score 
-of at least 6*.
+How do your perceptions differ from others' perctions of you? Below, explore 
+differing levels of overal connectedness and also mismatches between how 
+people rated others and how others rated them.
 """
 st.write(msg)
-st.image("src/connectedness/data/graphcommons/moon_network_graph_6.png")
+differences, vega_df, spec = vega_grouped_bar_chart(dfA_zeros, question="Question A")
+st.vega_lite_chart(vega_df, spec)
+fig, ax = delta_plot(dfA_zeros, question="Question A")
+st.pyplot(fig)
 
-msg = """
-Perhaps this network is more clear if we only visualize strong connnections. 
-This network only inludes mutual connections that averaged to a *score 
-of at least 8*.
-"""
-st.write(msg)
-st.image("src/connectedness/data/graphcommons/moon_network_graph_8.png")
+differences, vega_df, spec = vega_grouped_bar_chart(dfA_zeros, question="Question B")
+st.vega_lite_chart(vega_df, spec)
+fig, ax = delta_plot(dfA_zeros, question="Question B")
+st.pyplot(fig)
+
+
+
+# st.header("Explore the Connections Among Your Team")
+# msg = """
+# This graph is based on the average ratings between two people. To keep the 
+# graph readable, we've only inluded mutual connections that averaged to a *score 
+# of at least 6*.
+# """
+# st.write(msg)
+# st.image("src/connectedness/data/graphcommons/moon_network_graph_6.png")
+
+# msg = """
+# Perhaps this network is more clear if we only visualize strong connnections. 
+# This network only inludes mutual connections that averaged to a *score 
+# of at least 8*.
+# """
+# st.write(msg)
+# st.image("src/connectedness/data/graphcommons/moon_network_graph_8.png")
 
 
 # st.header("Groups")
@@ -126,18 +143,7 @@ st.image("src/connectedness/data/graphcommons/moon_network_graph_8.png")
 # fig, ax = load_clustermap(cmap)
 # st.pyplot(fig)
 
-st.header("Perceived Differences")
-msg = """
-How do your perceptions differ from others' perctions of you? Below, explore 
-differing levels of overal connectedness and also mismatches between how 
-people rated others and how others rated them.
-"""
-st.write(msg)
-differences, vega_df, spec = vega_grouped_bar_chart(pairwise_zeros)
-st.vega_lite_chart(vega_df, spec)
 
-fig, ax = delta_plot(pairwise_zeros)
-st.pyplot(fig)
 
 # threshold = 5
 # threshold = st.sidebar.slider("Threshold for Noticeable Difference", 

@@ -50,7 +50,7 @@ sns.set_theme()
 
 
 # Do not cache this function. Seems to crash streamlit
-def delta_plot(pairwise_df):
+def delta_plot(pairwise_df, question=None):
     # Transform data
     your_connectedness = pd.DataFrame(pairwise_df.sum(axis=1))
     connections_to_you = pd.DataFrame(pairwise_df.sum(axis=0))
@@ -72,14 +72,17 @@ def delta_plot(pairwise_df):
     ax.set_yticks(y_pos)
     ax.set_yticklabels(names)
     ax.grid(False)
-    ax.set_title("Difference Between Total Ratings By and For Each Person\n")
+    ttl = "Difference Between Total Ratings By and For Each Person\n"
+    if question:
+        ttl = f"{question}: {ttl}"
+    ax.set_title(ttl)
     ax.set_xlabel("\nHigher Ratings For You <–––––> Higher Ratings By You       ")
     plt.tight_layout()
     return fig, ax
 
 
 # @st.cache
-def vega_grouped_bar_chart(pairwise_df):
+def vega_grouped_bar_chart(pairwise_df, question=None):
     # pairwise_df = load_data()
     your_connectedness = pd.DataFrame(pairwise_df.sum(axis=1))
     connections_to_you = pd.DataFrame(pairwise_df.sum(axis=0))
@@ -101,6 +104,10 @@ def vega_grouped_bar_chart(pairwise_df):
 
     vega_df["Name"] = vega_df["Name"].apply(lambda n: n.split(" ")[-1])
     # print(vega_df)
+
+    ttl = "Differences in Perceived Connectedness"
+    if question:
+        ttl = f"{question}: {ttl}"
     
     spec = {
         "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
@@ -109,7 +116,7 @@ def vega_grouped_bar_chart(pairwise_df):
             # "text": {"angle": -45},
             "column": {
                 "field": "Name", "type": "nominal", "spacing": 10, "angle": -45,
-                "title": "Differences in Perceived Connectedness",
+                "title": ttl,
             },
             "y": {
                 "aggregate": "sum", "field": "Rating",
