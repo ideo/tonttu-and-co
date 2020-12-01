@@ -94,10 +94,15 @@ st.header("Explore the Connections Among Your Team")
 msg = """
 This graph is based on the average ratings between two people. To keep the 
 graph readable, we've only inluded mutual connections that averaged to a *score 
-of at least 6*.
+of at least 6*. The numbers beneath each name indicate the team that person 
+belongs to.
 # """
 st.write(msg)
+st.subheader("Question A")
 st.image("src/connectedness/data/graphcommons/workX_questionA_network_graph_6.png")
+
+st.subheader("Question B")
+st.image("src/connectedness/data/graphcommons/workX_questionB_network_graph_6.png")
 
 # msg = """
 # Perhaps this network is more clear if we only visualize strong connnections. 
