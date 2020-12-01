@@ -78,7 +78,7 @@ def delta_plot(pairwise_df):
     return fig, ax
 
 
-@st.cache
+# @st.cache
 def vega_grouped_bar_chart(pairwise_df):
     # pairwise_df = load_data()
     your_connectedness = pd.DataFrame(pairwise_df.sum(axis=1))

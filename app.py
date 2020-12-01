@@ -9,26 +9,49 @@ from src.connectedness import load_tsunagi_team_data, vega_grouped_bar_chart
 from src.connectedness import clustermap, delta_plot, load_clustermap
 
 
-st.title("Tsunagi Connectedness Survey")
-msg = """
-This survey is an attempt to allow you to easily check your teams' level of 
-connectedness. Periodically, your team can take the simple survey you filled 
-out. Then, here, you can explore the results and discuss.
-
-First, here are the raw numbers from the survey.
-"""
-st.write(msg)
+st.title("Tsunagi Connectedness Survey: Round 2!")
+# st.subheader("First Survey")
+# msg = """
+# First, here are the raw numbers from the first survey.
+# """
+# st.write(msg)
 
 # pairwise_nan, pairwise_zeros = load_tsunagi_team_data()
-pairwise_nan, pairwise_zeros, free_responses = load_saved_survey_results()
-st.dataframe(pairwise_nan)
+# pairwise_nan, pairwise_zeros, free_responses = load_saved_survey_results()
+df1_nan, df1_zeros, free_response1, dfA_nan, dfA_zeros, dfB_nan, dfB_zeros, free_response2 = load_saved_survey_results()
+# st.dataframe(df1_nan)
+
+# fig, ax = plt.subplots()
+# sns.heatmap(df1_zeros, cmap="viridis_r")
+# ax.set_ylabel("Ratings given by\n")
+# ax.set_xlabel("\nRatings given to")
+# st.pyplot(fig)
 
 
+# st.subheader("Second Survey")
+msg = """
+First, here are the raw numbers from the second survey. They second survey as 
+two versions of each question. We'll refer to them as Question A and Question B.
+"""
+st.write(msg)
+st.subheader("Question A")
+st.dataframe(dfA_nan)
 fig, ax = plt.subplots()
-sns.heatmap(pairwise_zeros, cmap="viridis_r")
+sns.heatmap(dfA_zeros, cmap="viridis_r")
 ax.set_ylabel("Ratings given by\n")
 ax.set_xlabel("\nRatings given to")
 st.pyplot(fig)
+
+
+st.subheader("Question B")
+st.dataframe(dfB_nan)
+fig, ax = plt.subplots()
+sns.heatmap(dfB_zeros, cmap="viridis_r")
+ax.set_ylabel("Ratings given by\n")
+ax.set_xlabel("\nRatings given to")
+st.pyplot(fig)
+
+
 
 
 st.header("What does Connectedness mean to you?")
