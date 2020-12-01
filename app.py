@@ -36,6 +36,11 @@ two versions of each question. We'll refer to them as Question A and Question B.
 """
 st.write(msg)
 st.subheader("Question A")
+question = """
+Example:  
+小野川さん：11月17日(オフサイト実施日)から今日までを振り返って、あなたとのつながり度合いはどれくらいですか。前回のあなたの定義をもとに答えてください。 (How close was your connection since the offsite?...Onogawa-san)
+"""
+st.write(question)
 st.dataframe(dfA_nan)
 fig, ax = plt.subplots()
 sns.heatmap(dfA_zeros, cmap="viridis_r")
@@ -45,6 +50,11 @@ st.pyplot(fig)
 
 
 st.subheader("Question B")
+question = """
+Example:  
+先週1週間を振り返り、小野川さんが感じている業務上の課題をどれくらい把握できていると感じますか？
+"""
+st.write(question)
 st.dataframe(dfB_nan)
 fig, ax = plt.subplots()
 sns.heatmap(dfB_zeros, cmap="viridis_r")
@@ -102,6 +112,7 @@ st.subheader("Question A")
 st.image("src/connectedness/data/graphcommons/workX_questionA_network_graph_6.png")
 
 st.subheader("Question B")
+
 st.image("src/connectedness/data/graphcommons/workX_questionB_network_graph_6.png")
 
 # msg = """
