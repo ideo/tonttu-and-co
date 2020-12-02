@@ -103,6 +103,7 @@ def vega_grouped_bar_chart(pairwise_df, question=None):
     vega_df = yours.append(others, ignore_index=True)
 
     vega_df["Name"] = vega_df["Name"].apply(lambda n: n.split(" ")[0])
+    vega_df = vega_df.groupby("Name").mean().reset_index()
     # print(vega_df)
 
     ttl = "Differences in Perceived Connectedness"
@@ -114,23 +115,23 @@ def vega_grouped_bar_chart(pairwise_df, question=None):
         "mark": "bar",
         "encoding": {
             # "text": {"angle": -45},
-            "column": {
-                "field": "Name", "type": "nominal", "spacing": 10, "angle": -45,
-                "title": ttl,
-            },
+            # "column": {
+            #     "field": "Name", "type": "nominal", "spacing": 10, "angle": -45,
+            #     "title": ttl,
+            # },
             "y": {
                 "aggregate": "sum", "field": "Rating",
                 "title": "Sum of All Ratings",
                 "axis": {"grid": False},
             },
             "x": {
-                "field": "Direction",
+                "field": "Name",
                 "axis": {"title": ""},
             },
-            "color": {
-                "field": "Direction",
-                "scale": {"range": ["#675193", "#ca8861"]}
-            }
+            # "color": {
+            #     "field": "Direction",
+            #     "scale": {"range": ["#675193", "#ca8861"]}
+            # }
         },
         "config": {
             "view": {"stroke": "transparent"},
@@ -192,10 +193,11 @@ def vega_grouped_bar_chart_comparison(df1, df2, question=None):
     vega_df = yours.append(others, ignore_index=True)
 
     vega_df["Name"] = vega_df["Name"].apply(lambda n: f"{n.split(' ')[0]} {n.split(' ')[-1][-2]}")
-    # print(vega_df)
-    # print("vega_df")
+    print(vega_df.groupby("Name").sum())
+    print("vega_df")
 
     vega_df = vega_df[~vega_df["Name"].isin(["Imai 1", "Katsuoka 1"])]
+    vega_df = vega_df.groupby("Name").sum().reset_index()
 
 
     ttl = "Differences in Perceived Connectedness"
@@ -207,23 +209,25 @@ def vega_grouped_bar_chart_comparison(df1, df2, question=None):
         "mark": "bar",
         "encoding": {
             # "text": {"angle": -45},
-            "column": {
-                "field": "Name", "type": "nominal", "spacing": 10, "angle": -45,
-                "title": ttl,
-            },
+            # "column": {
+            #     "field": "Name", "type": "nominal", "spacing": 10, "angle": -45,
+            #     "title": ttl,
+            # },
             "y": {
-                "aggregate": "sum", "field": "Rating",
+                "aggregate": "sum", 
+                "field": "Rating",
                 "title": "Sum of All Ratings",
                 "axis": {"grid": False},
             },
             "x": {
-                "field": "Direction",
+                # "field": "Direction",
+                "field": "Name",
                 "axis": {"title": ""},
             },
-            "color": {
-                "field": "Direction",
-                "scale": {"range": ["#675193", "#ca8861"]}
-            }
+            # "color": {
+            #     "field": "Direction",
+            #     "scale": {"range": ["#675193", "#ca8861"]}
+            # }
         },
         "config": {
             "view": {"stroke": "transparent"},
