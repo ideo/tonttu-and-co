@@ -34,19 +34,19 @@ msg = """
 First, here are the raw numbers from the second survey. They second survey as 
 two versions of each question. We'll refer to them as Question A and Question B.
 """
-st.write(msg)
-st.subheader("Question A")
-question = """
-Example:  
-小野川さん：11月17日(オフサイト実施日)から今日までを振り返って、あなたとのつながり度合いはどれくらいですか。前回のあなたの定義をもとに答えてください。 (How close was your connection since the offsite?...Onogawa-san)
-"""
-st.write(question)
-st.dataframe(dfA_nan)
-fig, ax = plt.subplots()
-sns.heatmap(dfA_zeros, cmap="viridis_r")
-ax.set_ylabel("Ratings given by\n")
-ax.set_xlabel("\nRatings given to")
-st.pyplot(fig)
+# st.write(msg)
+# st.subheader("Question A")
+# question = """
+# Example:  
+# 小野川さん：11月17日(オフサイト実施日)から今日までを振り返って、あなたとのつながり度合いはどれくらいですか。前回のあなたの定義をもとに答えてください。 (How close was your connection since the offsite?...Onogawa-san)
+# """
+# st.write(question)
+# st.dataframe(dfA_nan)
+# fig, ax = plt.subplots()
+# sns.heatmap(dfA_zeros, cmap="viridis_r")
+# ax.set_ylabel("Ratings given by\n")
+# ax.set_xlabel("\nRatings given to")
+# st.pyplot(fig)
 
 
 st.subheader("Question B")
@@ -97,9 +97,9 @@ st.vega_lite_chart(vega_df, spec)
 # fig, ax = delta_plot(dfA_zeros, question="Question A")
 # st.pyplot(fig)
 
-differences, vega_df, spec, ttl = vega_grouped_bar_chart(dfA_zeros, question="Question B")
-st.subheader(ttl)
-st.vega_lite_chart(vega_df, spec)
+# differences, vega_df, spec, ttl = vega_grouped_bar_chart(dfB_zeros, question="Question B")
+# st.subheader(ttl)
+# st.vega_lite_chart(vega_df, spec)
 # fig, ax = delta_plot(dfA_zeros, question="Question B")
 # st.pyplot(fig)
 
