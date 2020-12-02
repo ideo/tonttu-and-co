@@ -12,4 +12,4 @@ Tsunagi Survey for Moon Lab Responses.csv
 *つなぎ*.csv
 _plotting.py
 _connectedness.json
-graphcommons/*.csv
+src/connectedness/data/graphcommons/*.csv
