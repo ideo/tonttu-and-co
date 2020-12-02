@@ -293,6 +293,6 @@ def reorder_dataframe(df, row_index, col_index):
 
 
 if __name__ == "__main__":
-    pairwise_df = load_data()
-    clustergrid = clustermap(pairwise_df)
+    # pairwise_df = load_data()
+    # clustergrid = clustermap(pairwise_df)
     pass
