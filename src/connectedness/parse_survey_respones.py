@@ -26,6 +26,17 @@ def load_saved_survey_results():
     dfB_zeros = pd.read_pickle(filepath / Path("B_WorkX_Connectedness_zeros.pkl"))
     free_response2 = pd.read_pickle(filepath / Path("WorkX_free_responses_round2.pkl"))
 
+    # Only people who filled out both surveys.
+    peeps = list(set(df1_nan.columns).intersection(set(dfA_nan.columns)))
+
+    df1_nan.drop(index=[n for n in df1_nan.index.tolist() if n not in peeps], inplace=True)
+    df1_nan = df1_nan[peeps]
+
+    df1_zeros.drop(index=[n for n in df1_zeros.index.tolist() if n not in peeps], inplace=True)
+    df1_zeros = df1_zeros[peeps]
+
+    free_response1.drop(index=[n for n in free_response1.index.tolist() if n not in peeps], inplace=True)
+
     return df1_nan, df1_zeros, free_response1, dfA_nan, dfA_zeros, dfB_nan, dfB_zeros, free_response2
 
 

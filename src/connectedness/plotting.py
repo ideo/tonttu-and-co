@@ -103,7 +103,7 @@ def vega_grouped_bar_chart(pairwise_df, question=None):
     vega_df = yours.append(others, ignore_index=True)
 
     vega_df["Name"] = vega_df["Name"].apply(lambda n: n.split(" ")[0])
-    print(vega_df)
+    # print(vega_df)
 
     ttl = "Differences in Perceived Connectedness"
     if question:
