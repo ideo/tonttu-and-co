@@ -49,18 +49,18 @@ two versions of each question. We'll refer to them as Question A and Question B.
 # st.pyplot(fig)
 
 
-st.subheader("Question B")
-question = """
-Example:  
-先週1週間を振り返り、小野川さんが感じている業務上の課題をどれくらい把握できていると感じますか？
-"""
-st.write(question)
-st.dataframe(dfB_nan)
-fig, ax = plt.subplots()
-sns.heatmap(dfB_zeros, cmap="viridis_r")
-ax.set_ylabel("Ratings given by\n")
-ax.set_xlabel("\nRatings given to")
-st.pyplot(fig)
+# st.subheader("Question B")
+# question = """
+# Example:  
+# 先週1週間を振り返り、小野川さんが感じている業務上の課題をどれくらい把握できていると感じますか？
+# """
+# st.write(question)
+# st.dataframe(dfB_nan)
+# fig, ax = plt.subplots()
+# sns.heatmap(dfB_zeros, cmap="viridis_r")
+# ax.set_ylabel("Ratings given by\n")
+# ax.set_xlabel("\nRatings given to")
+# st.pyplot(fig)
 
 
 st.header("What does Connectedness mean to you?")
