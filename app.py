@@ -74,11 +74,17 @@ st.write(msg)
 st.table(free_response1.join(free_response2))
 
 
-st.header("Perceived Differences")
+# st.header("Perceived Differences")
+# msg = """
+# How do your perceptions differ from others' perctions of you? Below, explore 
+# differing levels of overal connectedness and also mismatches between how 
+# people rated others and how others rated them.
+# """
+st.header("Total Ratings")
 msg = """
-How do your perceptions differ from others' perctions of you? Below, explore 
-differing levels of overal connectedness and also mismatches between how 
-people rated others and how others rated them.
+Here you can see the cummulative ratings for each person, the sums of their 
+ratings for people and peoples' ratings for them. You can also see the changes 
+from round 1 to round 2.
 """
 st.write(msg)
 
