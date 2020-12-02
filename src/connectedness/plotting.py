@@ -106,9 +106,9 @@ def vega_grouped_bar_chart(pairwise_df, question=None):
     vega_df = vega_df.groupby("Name").mean().reset_index()
     # print(vega_df)
 
-    ttl = "Differences in Perceived Connectedness"
+    ttl = "Cummulative Ratings"
     if question:
-        ttl = f"{question}: {ttl}"
+        ttl = f"{question}\n{ttl}"
     
     spec = {
         "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
@@ -139,7 +139,7 @@ def vega_grouped_bar_chart(pairwise_df, question=None):
         }
     }
 
-    return useful_df, vega_df, spec
+    return useful_df, vega_df, spec, ttl
 
 
 def vega_grouped_bar_chart_comparison(df1, df2, question=None):
@@ -200,9 +200,9 @@ def vega_grouped_bar_chart_comparison(df1, df2, question=None):
     vega_df = vega_df.groupby("Name").sum().reset_index()
 
 
-    ttl = "Differences in Perceived Connectedness"
+    ttl = "Cummulative Ratings"
     if question:
-        ttl = f"{question}: {ttl}"
+        ttl = f"{question}\n{ttl}"
     
     spec = {
         "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
@@ -235,7 +235,7 @@ def vega_grouped_bar_chart_comparison(df1, df2, question=None):
         }
     }
 
-    return useful_df, vega_df, spec
+    return useful_df, vega_df, spec, ttl
 
 
 
