@@ -97,9 +97,10 @@ st.vega_lite_chart(vega_df, spec)
 # fig, ax = delta_plot(dfA_zeros, question="Question A")
 # st.pyplot(fig)
 
-# differences, vega_df, spec, ttl = vega_grouped_bar_chart(dfB_zeros, question="Question B")
-# st.subheader(ttl)
-# st.vega_lite_chart(vega_df, spec)
+differences, vega_df, spec, ttl = vega_grouped_bar_chart(dfB_zeros, question="Question B")
+st.subheader(ttl)
+st.vega_lite_chart(vega_df, spec)
+
 # fig, ax = delta_plot(dfA_zeros, question="Question B")
 # st.pyplot(fig)
 
